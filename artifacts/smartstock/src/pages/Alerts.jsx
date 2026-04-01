@@ -5,75 +5,78 @@ import { useAppContext } from '../context/AppContext.jsx';
 function getDaysUntilExpiry(expiryDate) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
-  const expiry = new Date(expiryDate);
-  return Math.ceil((expiry - today) / (1000 * 60 * 60 * 24));
+  return Math.ceil((new Date(expiryDate) - today) / (1000 * 60 * 60 * 24));
 }
 
 function formatDate(iso) {
   if (!iso) return '—';
-  return new Date(iso).toLocaleDateString('en-US', {
-    month: 'short', day: '2-digit', year: 'numeric',
-  });
+  return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
 }
 
 const styles = {
   header: { display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '28px' },
-  pageTitle: { fontSize: '22px', fontWeight: '700', color: '#1F4E79', margin: 0 },
+  pageTitle: { fontSize: '22px', fontWeight: '700', color: '#F1F5F9', margin: 0 },
   totalBadge: {
     display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
     minWidth: '28px', height: '28px', padding: '0 8px',
-    backgroundColor: '#dc2626', color: '#fff',
+    backgroundColor: 'rgba(239,68,68,0.15)', color: '#EF4444', border: '1px solid rgba(239,68,68,0.35)',
     borderRadius: '999px', fontSize: '13px', fontWeight: '700',
   },
   zeroBadge: {
     display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
     minWidth: '28px', height: '28px', padding: '0 8px',
-    backgroundColor: '#16a34a', color: '#fff',
+    backgroundColor: 'rgba(16,185,129,0.15)', color: '#10B981', border: '1px solid rgba(16,185,129,0.35)',
     borderRadius: '999px', fontSize: '13px', fontWeight: '700',
   },
   section: { marginBottom: '32px' },
   sectionHeader: {
     display: 'flex', alignItems: 'center', gap: '10px',
-    marginBottom: '14px', paddingBottom: '10px', borderBottom: '2px solid #e5e7eb',
+    marginBottom: '14px', paddingBottom: '10px', borderBottom: '1px solid #1E2D45',
   },
-  sectionTitle: { fontSize: '16px', fontWeight: '700', color: '#111827', margin: 0 },
+  sectionTitle: { fontSize: '16px', fontWeight: '600', color: '#CBD5E1', margin: 0 },
   sectionCount: {
     padding: '2px 8px', borderRadius: '999px', fontSize: '12px', fontWeight: '600',
-    backgroundColor: '#fee2e2', color: '#dc2626',
+    backgroundColor: 'rgba(239,68,68,0.12)', color: '#EF4444', border: '1px solid rgba(239,68,68,0.25)',
   },
   sectionCountOk: {
     padding: '2px 8px', borderRadius: '999px', fontSize: '12px', fontWeight: '600',
-    backgroundColor: '#dcfce7', color: '#16a34a',
+    backgroundColor: 'rgba(16,185,129,0.12)', color: '#10B981', border: '1px solid rgba(16,185,129,0.25)',
   },
   cardLeft: { display: 'flex', flexDirection: 'column', gap: '4px', flex: 1 },
-  productName: { fontSize: '15px', fontWeight: '600', color: '#111827' },
-  cardMeta: { display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap', marginTop: '2px' },
-  metaItem: { fontSize: '13px', color: '#6b7280' },
-  metaValue: { fontWeight: '600', color: '#374151' },
+  productName: { fontSize: '15px', fontWeight: '600', color: '#E2E8F0' },
+  cardMeta: { display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap', marginTop: '4px' },
+  metaItem: { fontSize: '13px', color: '#64748B' },
+  metaValue: { fontWeight: '600', color: '#94A3B8' },
   urgencyRed: {
-    display: 'inline-block', padding: '3px 10px', borderRadius: '999px',
+    display: 'inline-block', padding: '3px 10px', borderRadius: '20px',
     fontSize: '12px', fontWeight: '600',
-    backgroundColor: '#fef2f2', color: '#dc2626', border: '1px solid #fca5a5', whiteSpace: 'nowrap',
+    backgroundColor: 'rgba(239,68,68,0.1)', color: '#EF4444', border: '1px solid rgba(239,68,68,0.3)',
+    whiteSpace: 'nowrap', textShadow: '0 0 8px rgba(239,68,68,0.5)',
   },
-  urgencyOrange: {
-    display: 'inline-block', padding: '3px 10px', borderRadius: '999px',
+  urgencyAmber: {
+    display: 'inline-block', padding: '3px 10px', borderRadius: '20px',
     fontSize: '12px', fontWeight: '600',
-    backgroundColor: '#fff7ed', color: '#c2410c', border: '1px solid #fdba74', whiteSpace: 'nowrap',
+    backgroundColor: 'rgba(245,158,11,0.1)', color: '#F59E0B', border: '1px solid rgba(245,158,11,0.3)',
+    whiteSpace: 'nowrap', textShadow: '0 0 8px rgba(245,158,11,0.5)',
   },
   categoryPill: {
     display: 'inline-block', padding: '2px 8px', borderRadius: '4px',
     fontSize: '12px', fontWeight: '500',
-    backgroundColor: '#eff6ff', color: '#1d4ed8', border: '1px solid #bfdbfe',
+    backgroundColor: 'rgba(0,212,255,0.08)', color: '#00D4FF', border: '1px solid rgba(0,212,255,0.2)',
   },
   aiCard: {
-    backgroundColor: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: '8px',
-    padding: '14px 18px', marginBottom: '10px', boxShadow: '0 1px 4px rgba(0,0,0,0.04)',
+    backgroundColor: '#0F172A',
+    border: '1px solid rgba(124,58,237,0.3)',
+    borderLeft: '3px solid #7C3AED',
+    borderRadius: '12px', padding: '16px 18px', marginBottom: '10px',
+    transition: 'all 0.2s ease',
   },
-  aiCardText: { fontSize: '14px', color: '#1e3a5f', lineHeight: '1.6', margin: 0 },
+  aiCardText: { fontSize: '14px', color: '#94A3B8', lineHeight: '1.65', margin: 0 },
+  aiCardHighlight: { color: '#A78BFA', fontWeight: '600' },
   allGood: {
-    padding: '16px 20px', borderRadius: '8px',
-    backgroundColor: '#f0fdf4', border: '1px solid #bbf7d0',
-    color: '#15803d', fontSize: '14px', fontWeight: '500',
+    padding: '16px 20px', borderRadius: '12px',
+    backgroundColor: 'rgba(16,185,129,0.06)', border: '1px solid rgba(16,185,129,0.2)',
+    color: '#10B981', fontSize: '14px', fontWeight: '500',
   },
 };
 
@@ -89,20 +92,14 @@ function SectionHeader({ title, count }) {
 export default function Alerts() {
   const { products, isLoading } = useAppContext();
 
-  const lowStockItems = useMemo(
-    () => products.filter(p => p.quantity <= p.lowStockThreshold),
+  const lowStockItems = useMemo(() => products.filter(p => p.quantity <= p.lowStockThreshold), [products]);
+  const expiringSoonItems = useMemo(() =>
+    products
+      .map(p => ({ ...p, daysLeft: getDaysUntilExpiry(p.expiryDate) }))
+      .filter(p => p.daysLeft <= 7)
+      .sort((a, b) => a.daysLeft - b.daysLeft),
     [products]
   );
-
-  const expiringSoonItems = useMemo(
-    () =>
-      products
-        .map(p => ({ ...p, daysLeft: getDaysUntilExpiry(p.expiryDate) }))
-        .filter(p => p.daysLeft <= 7)
-        .sort((a, b) => a.daysLeft - b.daysLeft),
-    [products]
-  );
-
   const totalAlerts = lowStockItems.length + expiringSoonItems.length;
 
   if (isLoading) {
@@ -119,7 +116,7 @@ export default function Alerts() {
       <div style={styles.header}>
         <h1 style={styles.pageTitle}>Alerts</h1>
         <span style={totalAlerts > 0 ? styles.totalBadge : styles.zeroBadge}>{totalAlerts}</span>
-        <span style={{ fontSize: '13px', color: '#6b7280' }}>
+        <span style={{ fontSize: '13px', color: '#64748B' }}>
           {totalAlerts === 1 ? 'active alert' : 'active alerts'}
         </span>
       </div>
@@ -128,7 +125,7 @@ export default function Alerts() {
       <div style={styles.section}>
         <SectionHeader title="Low Stock Alerts" count={lowStockItems.length} />
         {lowStockItems.length === 0 ? (
-          <div style={styles.allGood}>No alerts in this category — you're all good!</div>
+          <div style={styles.allGood}>✓ No alerts — all stock levels healthy!</div>
         ) : (
           lowStockItems.map(product => (
             <div key={product.id} className="ss-alert-card">
@@ -136,20 +133,12 @@ export default function Alerts() {
                 <span style={styles.productName}>{product.name}</span>
                 <div style={styles.cardMeta}>
                   <span style={styles.categoryPill}>{product.category}</span>
-                  <span style={styles.metaItem}>
-                    Qty: <span style={styles.metaValue}>{product.quantity}</span>
-                  </span>
-                  <span style={styles.metaItem}>
-                    Threshold: <span style={styles.metaValue}>{product.lowStockThreshold}</span>
-                  </span>
-                  <span style={styles.urgencyRed}>
-                    Only {product.quantity} unit{product.quantity !== 1 ? 's' : ''} left
-                  </span>
+                  <span style={styles.metaItem}>Qty: <span style={styles.metaValue}>{product.quantity}</span></span>
+                  <span style={styles.metaItem}>Threshold: <span style={styles.metaValue}>{product.lowStockThreshold}</span></span>
+                  <span style={styles.urgencyRed}>Only {product.quantity} unit{product.quantity !== 1 ? 's' : ''} left</span>
                 </div>
               </div>
-              <Link to={`/edit/${product.id}`} className="ss-btn ss-btn-primary">
-                Update Quantity
-              </Link>
+              <Link to={`/edit/${product.id}`} className="ss-btn ss-btn-primary">Update Quantity</Link>
             </div>
           ))
         )}
@@ -159,31 +148,25 @@ export default function Alerts() {
       <div style={styles.section}>
         <SectionHeader title="Expiring Soon" count={expiringSoonItems.length} />
         {expiringSoonItems.length === 0 ? (
-          <div style={styles.allGood}>No alerts in this category — you're all good!</div>
+          <div style={styles.allGood}>✓ No items expiring soon!</div>
         ) : (
           expiringSoonItems.map(product => {
-            const urgencyStyle = product.daysLeft <= 2 ? styles.urgencyRed : styles.urgencyOrange;
+            const urgencyStyle = product.daysLeft <= 2 ? styles.urgencyRed : styles.urgencyAmber;
             const urgencyText = product.daysLeft <= 0
               ? 'Expires today!'
-              : product.daysLeft === 1
-              ? 'Expires in 1 day'
+              : product.daysLeft === 1 ? 'Expires in 1 day'
               : `Expires in ${product.daysLeft} days`;
-
             return (
               <div key={product.id} className="ss-alert-card">
                 <div style={styles.cardLeft}>
                   <span style={styles.productName}>{product.name}</span>
                   <div style={styles.cardMeta}>
                     <span style={styles.categoryPill}>{product.category}</span>
-                    <span style={styles.metaItem}>
-                      Expiry: <span style={styles.metaValue}>{formatDate(product.expiryDate)}</span>
-                    </span>
+                    <span style={styles.metaItem}>Expiry: <span style={styles.metaValue}>{formatDate(product.expiryDate)}</span></span>
                     <span style={urgencyStyle}>{urgencyText}</span>
                   </div>
                 </div>
-                <Link to={`/edit/${product.id}`} className="ss-btn ss-btn-primary">
-                  Update Stock
-                </Link>
+                <Link to={`/edit/${product.id}`} className="ss-btn ss-btn-primary">Update Stock</Link>
               </div>
             );
           })
@@ -194,22 +177,23 @@ export default function Alerts() {
       <div style={styles.section}>
         <SectionHeader title="AI Reorder Suggestions" count={lowStockItems.length} />
         {lowStockItems.length === 0 ? (
-          <div style={styles.allGood}>No alerts in this category — you're all good!</div>
+          <div style={styles.allGood}>✓ No reorder suggestions needed right now!</div>
         ) : (
-          lowStockItems.map(product => {
-            const suggested = product.lowStockThreshold * 3;
-            return (
-              <div key={product.id} style={styles.aiCard}>
-                <p style={styles.aiCardText}>
-                  🤖 <strong>Based on low stock levels, consider reordering {product.name}.</strong>
-                  <br />
-                  Current stock: <strong>{product.quantity} units</strong> (threshold:{' '}
-                  {product.lowStockThreshold}). Suggested reorder:{' '}
-                  <strong>{suggested} units</strong>.
-                </p>
-              </div>
-            );
-          })
+          lowStockItems.map(product => (
+            <div key={product.id} style={styles.aiCard}>
+              <p style={styles.aiCardText}>
+                🤖{' '}
+                <span style={styles.aiCardHighlight}>
+                  Consider reordering {product.name}.
+                </span>
+                <br />
+                Current stock:{' '}
+                <span style={styles.aiCardHighlight}>{product.quantity} units</span>{' '}
+                (threshold: {product.lowStockThreshold}). Suggested reorder:{' '}
+                <span style={styles.aiCardHighlight}>{product.lowStockThreshold * 3} units</span>.
+              </p>
+            </div>
+          ))
         )}
       </div>
     </div>

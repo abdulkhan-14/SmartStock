@@ -3,9 +3,7 @@ import { NavLink } from 'react-router-dom';
 export default function Navbar() {
   return (
     <nav className="ss-navbar">
-      <NavLink to="/" className="ss-navbar-brand">
-        SmartStock
-      </NavLink>
+      <NavLink to="/" className="ss-navbar-brand">SmartStock</NavLink>
       <div className="ss-navbar-links">
         <NavLink
           to="/"

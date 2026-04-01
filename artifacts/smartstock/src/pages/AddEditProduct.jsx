@@ -6,34 +6,55 @@ const CATEGORIES = ['Produce', 'Dairy', 'Bakery', 'Beverages', 'Snacks', 'Frozen
 
 const styles = {
   pageTitle: {
-    fontSize: '24px', fontWeight: '700', color: '#1F4E79',
-    marginBottom: '24px', paddingBottom: '12px', borderBottom: '2px solid #e5e7eb',
+    fontSize: '24px', fontWeight: '700', color: '#F1F5F9',
+    marginBottom: '24px', paddingBottom: '12px', borderBottom: '1px solid #1E2D45',
   },
   card: {
-    backgroundColor: '#ffffff', border: '1px solid #e5e7eb',
-    borderRadius: '10px', padding: '28px',
-    boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+    backgroundColor: '#111827', border: '1px solid #1E2D45',
+    borderRadius: '12px', padding: '28px',
+    boxShadow: '0 4px 24px rgba(0,0,0,0.3)',
   },
   fieldGroup: { display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '20px' },
-  label: {
-    fontSize: '13px', fontWeight: '600', color: '#374151',
-    textTransform: 'uppercase', letterSpacing: '0.04em',
-  },
-  required: { color: '#ef4444', marginLeft: '3px' },
-  errorText: { fontSize: '12px', color: '#ef4444', marginTop: '2px' },
-  divider: { borderTop: '1px solid #e5e7eb', margin: '24px 0' },
+  label: { fontSize: '13px', fontWeight: '500', color: '#94A3B8' },
+  required: { color: '#EF4444', marginLeft: '3px' },
+  errorText: { fontSize: '12px', color: '#EF4444', marginTop: '2px' },
+  divider: { borderTop: '1px solid #1E2D45', margin: '24px 0' },
   overlay: {
-    position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.45)',
+    position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.7)',
     display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000,
+    backdropFilter: 'blur(4px)',
   },
   dialog: {
-    backgroundColor: '#ffffff', borderRadius: '10px', padding: '28px',
-    maxWidth: '420px', width: '90%', boxShadow: '0 20px 60px rgba(0,0,0,0.2)',
+    backgroundColor: '#111827', border: '1px solid #1E2D45',
+    borderRadius: '12px', padding: '28px',
+    maxWidth: '420px', width: '90%', boxShadow: '0 24px 64px rgba(0,0,0,0.6)',
   },
-  dialogTitle: { fontSize: '18px', fontWeight: '700', color: '#111827', marginBottom: '10px' },
-  dialogBody: { fontSize: '14px', color: '#6b7280', marginBottom: '24px', lineHeight: '1.5' },
+  dialogTitle: { fontSize: '18px', fontWeight: '700', color: '#F1F5F9', marginBottom: '10px' },
+  dialogBody: { fontSize: '14px', color: '#94A3B8', marginBottom: '24px', lineHeight: '1.6' },
   dialogActions: { display: 'flex', justifyContent: 'flex-end', gap: '10px' },
 };
+
+function inputStyle(isFocused, hasError) {
+  return {
+    width: '100%', boxSizing: 'border-box',
+    padding: '10px 12px', fontSize: '15px', fontFamily: 'inherit',
+    backgroundColor: '#1E293B', color: '#E2E8F0',
+    border: `1px solid ${hasError ? '#EF4444' : isFocused ? '#00D4FF' : '#334155'}`,
+    borderRadius: '8px', outline: 'none',
+    boxShadow: isFocused ? (hasError ? '0 0 0 3px rgba(239,68,68,0.15)' : '0 0 0 3px rgba(0,212,255,0.15)') : 'none',
+    transition: 'all 0.2s ease',
+  };
+}
+
+function selectStyle(hasError) {
+  return {
+    width: '100%', boxSizing: 'border-box',
+    padding: '10px 12px', fontSize: '15px', fontFamily: 'inherit',
+    backgroundColor: '#1E293B', color: '#E2E8F0',
+    border: `1px solid ${hasError ? '#EF4444' : '#334155'}`,
+    borderRadius: '8px', outline: 'none', cursor: 'pointer',
+  };
+}
 
 function FormField({ label, required, error, children }) {
   return (
@@ -59,7 +80,6 @@ export default function AddEditProduct() {
   const [form, setForm] = useState({
     name: '', category: '', quantity: '', expiryDate: '', supplier: '', lowStockThreshold: '10',
   });
-
   const [errors, setErrors] = useState({});
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [focusedField, setFocusedField] = useState(null);
@@ -99,7 +119,6 @@ export default function AddEditProduct() {
     e.preventDefault();
     const newErrors = validate();
     if (Object.keys(newErrors).length > 0) { setErrors(newErrors); return; }
-
     const productData = {
       name: form.name.trim(), category: form.category,
       quantity: Number(form.quantity), expiryDate: form.expiryDate,
@@ -107,12 +126,9 @@ export default function AddEditProduct() {
       lowStockThreshold: form.lowStockThreshold !== '' ? Number(form.lowStockThreshold) : 10,
       lastUpdated: new Date().toISOString(),
     };
-
     if (isEditMode) { updateProduct(id, productData); } else { addProduct(productData); }
     navigate('/inventory');
   }
-
-  function handleCancel() { navigate(-1); }
 
   function handleDeleteConfirm() {
     deleteProduct(id);
@@ -120,18 +136,10 @@ export default function AddEditProduct() {
     navigate('/inventory');
   }
 
-  function inputStyle(fieldName) {
-    return {
-      width: '100%', boxSizing: 'border-box',
-      ...(focusedField === fieldName ? { borderColor: '#1F4E79', backgroundColor: '#ffffff' } : {}),
-      ...(errors[fieldName] ? { borderColor: '#ef4444' } : {}),
-    };
-  }
-
   if (isEditMode && !existingProduct) {
     return (
       <div className="ss-page" style={{ maxWidth: '640px', margin: '0 auto' }}>
-        <p style={{ color: '#6b7280' }}>Product not found.</p>
+        <p style={{ color: '#64748B' }}>Product not found.</p>
       </div>
     );
   }
@@ -148,15 +156,14 @@ export default function AddEditProduct() {
               type="text" name="name" value={form.name} onChange={handleChange}
               onFocus={() => setFocusedField('name')} onBlur={() => setFocusedField(null)}
               placeholder="e.g. Whole Milk 2L"
-              className="ss-input" style={inputStyle('name')}
+              style={inputStyle(focusedField === 'name', !!errors.name)}
             />
           </FormField>
 
           <FormField label="Category" required error={errors.category}>
             <select
               name="category" value={form.category} onChange={handleChange}
-              className="ss-select"
-              style={{ width: '100%', boxSizing: 'border-box', ...(errors.category ? { borderColor: '#ef4444' } : {}) }}
+              style={selectStyle(!!errors.category)}
             >
               <option value="">Select a category…</option>
               {CATEGORIES.map(cat => <option key={cat} value={cat}>{cat}</option>)}
@@ -169,16 +176,15 @@ export default function AddEditProduct() {
                 type="number" name="quantity" value={form.quantity} onChange={handleChange}
                 onFocus={() => setFocusedField('quantity')} onBlur={() => setFocusedField(null)}
                 min="0" placeholder="0"
-                className="ss-input" style={inputStyle('quantity')}
+                style={inputStyle(focusedField === 'quantity', !!errors.quantity)}
               />
             </FormField>
-
             <FormField label="Low Stock Threshold" error={errors.lowStockThreshold}>
               <input
                 type="number" name="lowStockThreshold" value={form.lowStockThreshold} onChange={handleChange}
                 onFocus={() => setFocusedField('lowStockThreshold')} onBlur={() => setFocusedField(null)}
                 min="0" placeholder="10"
-                className="ss-input" style={inputStyle('lowStockThreshold')}
+                style={inputStyle(focusedField === 'lowStockThreshold', false)}
               />
             </FormField>
           </div>
@@ -187,7 +193,7 @@ export default function AddEditProduct() {
             <input
               type="date" name="expiryDate" value={form.expiryDate} onChange={handleChange}
               onFocus={() => setFocusedField('expiryDate')} onBlur={() => setFocusedField(null)}
-              className="ss-input" style={inputStyle('expiryDate')}
+              style={{ ...inputStyle(focusedField === 'expiryDate', !!errors.expiryDate), colorScheme: 'dark' }}
             />
           </FormField>
 
@@ -196,7 +202,7 @@ export default function AddEditProduct() {
               type="text" name="supplier" value={form.supplier} onChange={handleChange}
               onFocus={() => setFocusedField('supplier')} onBlur={() => setFocusedField(null)}
               placeholder="e.g. Green Valley Dairy"
-              className="ss-input" style={inputStyle('supplier')}
+              style={inputStyle(focusedField === 'supplier', false)}
             />
           </FormField>
 
@@ -204,19 +210,11 @@ export default function AddEditProduct() {
 
           <div className="ss-form-actions">
             <div className="ss-form-actions-left">
-              <button type="submit" className="ss-btn ss-btn-primary">
-                Save Product
-              </button>
-              <button type="button" onClick={handleCancel} className="ss-btn ss-btn-secondary">
-                Cancel
-              </button>
+              <button type="submit" className="ss-btn ss-btn-primary">Save Product</button>
+              <button type="button" onClick={() => navigate(-1)} className="ss-btn ss-btn-secondary">Cancel</button>
             </div>
             {isEditMode && (
-              <button
-                type="button"
-                onClick={() => setShowDeleteDialog(true)}
-                className="ss-btn ss-btn-danger"
-              >
+              <button type="button" onClick={() => setShowDeleteDialog(true)} className="ss-btn ss-btn-danger">
                 Delete Product
               </button>
             )}
@@ -229,19 +227,17 @@ export default function AddEditProduct() {
           <div style={styles.dialog}>
             <div style={styles.dialogTitle}>Delete Product?</div>
             <div style={styles.dialogBody}>
-              Are you sure you want to delete <strong>{existingProduct?.name}</strong>?
+              Are you sure you want to delete <strong style={{ color: '#E2E8F0' }}>{existingProduct?.name}</strong>?
               This action cannot be undone.
             </div>
             <div style={styles.dialogActions}>
-              <button onClick={() => setShowDeleteDialog(false)} className="ss-btn ss-btn-secondary">
-                Cancel
-              </button>
+              <button onClick={() => setShowDeleteDialog(false)} className="ss-btn ss-btn-secondary">Cancel</button>
               <button
                 onClick={handleDeleteConfirm}
                 className="ss-btn"
-                style={{ backgroundColor: '#dc2626', color: '#ffffff', border: 'none' }}
-                onMouseOver={e => e.currentTarget.style.backgroundColor = '#b91c1c'}
-                onMouseOut={e => e.currentTarget.style.backgroundColor = '#dc2626'}
+                style={{ background: '#EF4444', color: '#fff', border: 'none' }}
+                onMouseOver={e => e.currentTarget.style.background = '#DC2626'}
+                onMouseOut={e => e.currentTarget.style.background = '#EF4444'}
               >
                 Yes, Delete
               </button>

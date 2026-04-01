@@ -1,0 +1,66 @@
+Redesign the entire SmartStock app with a modern dark mode UI. Apply these changes globally across all screens and components:
+
+COLOUR PALETTE:
+- Page background: #0A0E1A (near-black dark navy)
+- Card/panel background: #111827 (dark slate)
+- Card border: 1px solid #1E2D45 (subtle blue-grey border)
+- Primary accent: #00D4FF (electric cyan)
+- Secondary accent: #7C3AED (purple)
+- Success/normal: #10B981 (emerald green)
+- Warning/expiring: #F59E0B (amber)
+- Danger/low stock: #EF4444 (red)
+- Body text: #E2E8F0 (off-white)
+- Muted text: #64748B (slate grey)
+- Input background: #1E293B
+
+NAVBAR:
+- Background: #070B14 with a bottom border: 1px solid #00D4FF20
+- Logo "SmartStock" in bold with a cyan (#00D4FF) glow: text-shadow: 0 0 12px #00D4FF
+- Nav links in #94A3B8, active link in #00D4FF with a cyan underline glow
+- Add a subtle cyan left-border indicator on the active link
+
+CARDS & PANELS:
+- All cards: background #111827, border 1px solid #1E2D45, border-radius 12px
+- Add a very subtle top glow on hover: box-shadow: 0 0 20px #00D4FF15
+- Card headers: use a gradient bar — background: linear-gradient(90deg, #00D4FF20, transparent)
+- Panel section titles: uppercase, letter-spacing: 0.1em, font-size 11px, color #00D4FF
+
+STATUS BADGES:
+- Low Stock: background #EF444415, color #EF4444, border 1px solid #EF444440
+- Expiring Soon: background #F59E0B15, color #F59E0B, border 1px solid #F59E0B40
+- Normal: background #10B98115, color #10B981, border 1px solid #10B98140
+- All badges: border-radius 20px, padding 3px 10px, font-size 12px, font-weight 600
+
+BUTTONS:
+- Primary (Save/Add): background linear-gradient(135deg, #00D4FF, #0EA5E9), color #000, font-weight 700, border-radius 8px, no border, box-shadow: 0 0 16px #00D4FF40 on hover
+- Secondary (Cancel): background transparent, border 1px solid #334155, color #94A3B8, border-radius 8px
+- Danger (Delete): background transparent, border 1px solid #EF4444, color #EF4444, border-radius 8px
+
+INPUTS & FORMS:
+- Background: #1E293B, border: 1px solid #334155, border-radius 8px, color #E2E8F0
+- On focus: border-color #00D4FF, box-shadow: 0 0 0 3px #00D4FF20
+- Labels: color #94A3B8, font-size 13px, font-weight 500
+
+DASHBOARD PANELS:
+- Each panel card gets a unique left border accent:
+  Low Stock panel: border-left 3px solid #EF4444
+  Expiring Soon panel: border-left 3px solid #F59E0B
+  Fast Moving panel: border-left 3px solid #00D4FF
+  Summary panel: border-left 3px solid #7C3AED
+- AI Insight banner: background linear-gradient(135deg, #00D4FF10, #7C3AED10), border 1px solid #00D4FF30, border-radius 12px, with a "🤖 AI Insight" label in cyan
+
+ALERTS SCREEN:
+- AI Suggestion cards: background #0F172A, border 1px solid #7C3AED40, left border 3px solid #7C3AED
+- Urgency labels styled as glowing text (text-shadow matching their colour)
+
+TYPOGRAPHY:
+- Font: use 'Inter', system-ui, sans-serif
+- Add to index.html: <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+- Page titles: font-weight 700, color #F1F5F9
+- Section headings: font-weight 600, color #CBD5E1
+
+GENERAL:
+- Page background: #0A0E1A on body and all page wrappers
+- Scrollbar: thin, dark (use ::-webkit-scrollbar with #1E293B track and #334155 thumb)
+- All transitions: transition: all 0.2s ease on interactive elements
+- Do not change any logic, routing, or data. Only update styles.

@@ -4,10 +4,10 @@ import { useAppContext } from '../context/AppContext.jsx';
 
 const CATEGORIES = ['Produce', 'Dairy', 'Bakery', 'Beverages', 'Snacks', 'Frozen', 'Household'];
 const SORT_OPTIONS = [
-  { value: 'name-asc', label: 'Name A–Z' },
-  { value: 'qty-asc', label: 'Quantity (Low to High)' },
-  { value: 'qty-desc', label: 'Quantity (High to Low)' },
-  { value: 'expiry-asc', label: 'Expiry Date (Nearest First)' },
+  { value: 'name-asc',    label: 'Name A–Z' },
+  { value: 'qty-asc',     label: 'Quantity (Low to High)' },
+  { value: 'qty-desc',    label: 'Quantity (High to Low)' },
+  { value: 'expiry-asc',  label: 'Expiry Date (Nearest First)' },
 ];
 
 function getStatus(product) {
@@ -25,9 +25,9 @@ function formatDate(iso) {
 }
 
 const statusConfig = {
-  low:      { label: 'Low Stock',     bg: 'rgba(239,68,68,0.1)',    color: '#EF4444', border: 'rgba(239,68,68,0.3)' },
-  expiring: { label: 'Expiring Soon', bg: 'rgba(245,158,11,0.1)',   color: '#F59E0B', border: 'rgba(245,158,11,0.3)' },
-  normal:   { label: 'Normal',        bg: 'rgba(16,185,129,0.1)',   color: '#10B981', border: 'rgba(16,185,129,0.3)' },
+  low:      { label: 'Low Stock',     bg: '#FEE2E2', color: '#EF4444', border: '#FECACA' },
+  expiring: { label: 'Expiring Soon', bg: '#FEF3C7', color: '#D97706', border: '#FDE68A' },
+  normal:   { label: 'Normal',        bg: '#D1FAE5', color: '#059669', border: '#A7F3D0' },
 };
 
 function StatusBadge({ status }) {
@@ -45,35 +45,36 @@ function StatusBadge({ status }) {
 }
 
 const styles = {
-  pageTitle: { fontSize: '22px', fontWeight: '700', color: '#F1F5F9', margin: 0 },
-  resultCount: { fontSize: '13px', color: '#64748B', marginBottom: '12px' },
-  table: { width: '100%', borderCollapse: 'collapse', fontSize: '14px', backgroundColor: '#111827' },
+  pageTitle: { fontSize: '22px', fontWeight: '700', color: '#111827', margin: 0 },
+  resultCount: { fontSize: '13px', color: '#6B7280', marginBottom: '12px' },
+  table: { width: '100%', borderCollapse: 'collapse', fontSize: '14px', backgroundColor: '#FFFFFF' },
   th: {
-    backgroundColor: 'rgba(0,0,0,0.3)', color: '#64748B', fontWeight: '600',
+    backgroundColor: '#F9FAFB', color: '#6B7280', fontWeight: '600',
     fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.08em',
-    padding: '12px 16px', textAlign: 'left', borderBottom: '1px solid #1E2D45', whiteSpace: 'nowrap',
+    padding: '12px 16px', textAlign: 'left',
+    borderBottom: '1px solid #E5E7EB', whiteSpace: 'nowrap',
   },
   td: {
-    padding: '13px 16px', color: '#CBD5E1',
-    borderBottom: '1px solid rgba(255,255,255,0.04)', verticalAlign: 'middle',
+    padding: '13px 16px', color: '#374151',
+    borderBottom: '1px solid #F3F4F6', verticalAlign: 'middle',
   },
-  productLink: { color: '#00D4FF', fontWeight: '600' },
+  productLink: { color: '#059669', fontWeight: '600' },
   categoryTag: {
     display: 'inline-block', padding: '2px 8px', borderRadius: '4px',
     fontSize: '12px', fontWeight: '500',
-    backgroundColor: 'rgba(0,212,255,0.08)', color: '#00D4FF', border: '1px solid rgba(0,212,255,0.2)',
+    backgroundColor: '#ECFDF5', color: '#059669', border: '1px solid #A7F3D0',
   },
-  empty: { textAlign: 'center', padding: '48px', color: '#64748B', fontSize: '15px', backgroundColor: '#111827' },
+  empty: { textAlign: 'center', padding: '48px', color: '#6B7280', fontSize: '15px', backgroundColor: '#FFFFFF' },
 };
 
 export default function InventoryList() {
   const { products, isLoading } = useAppContext();
   const navigate = useNavigate();
 
-  const [search, setSearch] = useState('');
+  const [search, setSearch]             = useState('');
   const [categoryFilter, setCategoryFilter] = useState('All');
-  const [sort, setSort] = useState('name-asc');
-  const [hoveredRow, setHoveredRow] = useState(null);
+  const [sort, setSort]                 = useState('name-asc');
+  const [hoveredRow, setHoveredRow]     = useState(null);
 
   const filtered = useMemo(() => {
     let result = [...products];
@@ -83,10 +84,10 @@ export default function InventoryList() {
     }
     if (categoryFilter !== 'All') result = result.filter(p => p.category === categoryFilter);
     result.sort((a, b) => {
-      if (sort === 'name-asc') return a.name.localeCompare(b.name);
-      if (sort === 'qty-asc') return a.quantity - b.quantity;
-      if (sort === 'qty-desc') return b.quantity - a.quantity;
-      if (sort === 'expiry-asc') return new Date(a.expiryDate) - new Date(b.expiryDate);
+      if (sort === 'name-asc')    return a.name.localeCompare(b.name);
+      if (sort === 'qty-asc')     return a.quantity - b.quantity;
+      if (sort === 'qty-desc')    return b.quantity - a.quantity;
+      if (sort === 'expiry-asc')  return new Date(a.expiryDate) - new Date(b.expiryDate);
       return 0;
     });
     return result;
@@ -127,8 +128,8 @@ export default function InventoryList() {
       </div>
 
       <div style={styles.resultCount}>
-        Showing <strong style={{ color: '#E2E8F0' }}>{filtered.length}</strong> of{' '}
-        <strong style={{ color: '#E2E8F0' }}>{products.length}</strong> products
+        Showing <strong style={{ color: '#111827' }}>{filtered.length}</strong> of{' '}
+        <strong style={{ color: '#111827' }}>{products.length}</strong> products
       </div>
 
       <div className="ss-table-wrapper">
@@ -155,7 +156,7 @@ export default function InventoryList() {
                   <tr
                     key={product.id}
                     style={{
-                      backgroundColor: isHovered ? 'rgba(0,212,255,0.04)' : 'transparent',
+                      backgroundColor: isHovered ? '#F0FAF4' : 'transparent',
                       cursor: 'pointer',
                       transition: 'background-color 0.15s ease',
                     }}
@@ -175,7 +176,7 @@ export default function InventoryList() {
                     <td style={styles.td}>
                       <span style={styles.categoryTag}>{product.category}</span>
                     </td>
-                    <td style={{ ...styles.td, textAlign: 'right', fontWeight: '600', fontVariantNumeric: 'tabular-nums', color: '#E2E8F0' }}>
+                    <td style={{ ...styles.td, textAlign: 'right', fontWeight: '600', fontVariantNumeric: 'tabular-nums', color: '#111827' }}>
                       {product.quantity}
                     </td>
                     <td style={styles.td}>{formatDate(product.expiryDate)}</td>

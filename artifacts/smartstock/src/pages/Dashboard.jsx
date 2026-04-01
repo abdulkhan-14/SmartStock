@@ -24,30 +24,33 @@ function getGreeting() {
   return 'Good evening';
 }
 
-/* ── Shared card/style tokens ─────────────────────────────────── */
+const CHART_COLORS = ['#10B981', '#059669', '#34D399'];
+
+/* ── Shared style tokens ──────────────────────────────────────── */
 const card = (borderColor) => ({
-  backgroundColor: '#111827',
-  border: '1px solid #1E2D45',
+  backgroundColor: '#FFFFFF',
+  border: '1px solid #D1FAE5',
   borderLeft: `3px solid ${borderColor}`,
   borderRadius: '12px',
   overflow: 'hidden',
   display: 'flex',
   flexDirection: 'column',
-  transition: 'all 0.2s ease',
+  boxShadow: '0 2px 8px rgba(16,185,129,0.06)',
+  transition: 'box-shadow 0.2s ease',
 });
 
-const cardHeader = (gradientColor = '#00D4FF') => ({
-  background: `linear-gradient(90deg, ${gradientColor}12, transparent)`,
+const cardHeader = (accentColor = '#059669') => ({
+  background: `linear-gradient(90deg, ${accentColor}0A, transparent)`,
   padding: '14px 20px 12px',
-  borderBottom: '1px solid #1E2D45',
+  borderBottom: '1px solid #D1FAE5',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
 });
 
-const sectionLabel = (color = '#00D4FF') => ({
+const sectionLabel = (color = '#059669') => ({
   fontSize: '11px', fontWeight: '700', color,
-  textTransform: 'uppercase', letterSpacing: '0.1em', margin: 0,
+  textTransform: 'uppercase', letterSpacing: '0.08em', margin: 0,
 });
 
 const countChip = (bg, color) => ({
@@ -57,41 +60,38 @@ const countChip = (bg, color) => ({
   display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
 });
 
-const row = {
+const rowStyle = {
   display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-  padding: '9px 0', borderBottom: '1px solid rgba(255,255,255,0.04)', gap: '8px',
+  padding: '9px 0', borderBottom: '1px solid #F3F4F6', gap: '8px',
 };
 const rowLeft = { display: 'flex', flexDirection: 'column', gap: '2px', flex: 1, minWidth: 0 };
-const rowName = { fontSize: '14px', fontWeight: '600', color: '#00D4FF', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' };
-const rowSub  = { fontSize: '12px', color: '#64748B' };
+const rowName = { fontSize: '14px', fontWeight: '600', color: '#059669', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' };
+const rowSub  = { fontSize: '12px', color: '#6B7280' };
 
 const categoryPill = {
   display: 'inline-block', padding: '2px 7px', borderRadius: '4px',
   fontSize: '11px', fontWeight: '500', flexShrink: 0,
-  backgroundColor: 'rgba(0,212,255,0.08)', color: '#00D4FF', border: '1px solid rgba(0,212,255,0.2)',
+  backgroundColor: '#ECFDF5', color: '#059669', border: '1px solid #A7F3D0',
 };
 
-const urgencyRed   = { fontSize: '12px', fontWeight: '600', color: '#EF4444', whiteSpace: 'nowrap', flexShrink: 0, textShadow: '0 0 8px rgba(239,68,68,0.5)' };
-const urgencyAmber = { fontSize: '12px', fontWeight: '600', color: '#F59E0B', whiteSpace: 'nowrap', flexShrink: 0, textShadow: '0 0 8px rgba(245,158,11,0.5)' };
+const urgencyRed   = { fontSize: '12px', fontWeight: '600', color: '#EF4444', whiteSpace: 'nowrap', flexShrink: 0 };
+const urgencyAmber = { fontSize: '12px', fontWeight: '600', color: '#D97706', whiteSpace: 'nowrap', flexShrink: 0 };
 const qtyBadge     = { fontSize: '12px', fontWeight: '700', flexShrink: 0, color: '#EF4444' };
 
-const footerLink = { fontSize: '13px', color: '#00D4FF', fontWeight: '600' };
-const cardFooter = { padding: '10px 20px', borderTop: '1px solid #1E2D45', backgroundColor: 'rgba(0,0,0,0.2)' };
-const cardBody   = { padding: '14px 20px', flex: 1 };
-const allGood    = { display: 'flex', alignItems: 'center', gap: '8px', padding: '12px 0', fontSize: '14px', color: '#10B981', fontWeight: '500' };
+const footerLinkStyle = { fontSize: '13px', color: '#10B981', fontWeight: '600' };
+const cardFooterStyle = { padding: '10px 20px', borderTop: '1px solid #D1FAE5', backgroundColor: '#FAFAFA' };
+const cardBodyStyle   = { padding: '14px 20px', flex: 1 };
+const allGoodStyle    = { display: 'flex', alignItems: 'center', gap: '8px', padding: '12px 0', fontSize: '14px', color: '#059669', fontWeight: '500' };
 
 const summaryItem = {
-  backgroundColor: 'rgba(255,255,255,0.03)', border: '1px solid #1E2D45',
+  backgroundColor: '#F0FAF4', border: '1px solid #D1FAE5',
   borderRadius: '8px', padding: '14px 16px',
   display: 'flex', flexDirection: 'column', gap: '4px',
 };
-const summaryValue = { fontSize: '28px', fontWeight: '800', color: '#F1F5F9', lineHeight: 1 };
-const summaryLabel = { fontSize: '12px', color: '#64748B', fontWeight: '500' };
+const summaryValue = { fontSize: '28px', fontWeight: '800', color: '#111827', lineHeight: 1 };
+const summaryLabel = { fontSize: '12px', color: '#6B7280', fontWeight: '500' };
 
-/* ── Tooltip colors for recharts ──────────────────────────────── */
-const CHART_COLORS = ['#00D4FF', '#7C3AED', '#0EA5E9'];
-
-/* ── Main component ───────────────────────────────────────────── */
+/* ── Component ────────────────────────────────────────────────── */
 export default function Dashboard() {
   const { products, isLoading } = useAppContext();
 
@@ -111,15 +111,12 @@ export default function Dashboard() {
     [products]
   );
 
-  const totalUnits   = useMemo(() => products.reduce((s, p) => s + p.quantity, 0), [products]);
-  const categorySet  = useMemo(() => [...new Set(products.map(p => p.category))], [products]);
+  const totalUnits  = useMemo(() => products.reduce((s, p) => s + p.quantity, 0), [products]);
+  const categorySet = useMemo(() => [...new Set(products.map(p => p.category))], [products]);
 
-  /* chart: group by category, sum quantities */
   const chartData = useMemo(() => {
     const map = {};
-    products.forEach(p => {
-      map[p.category] = (map[p.category] || 0) + p.quantity;
-    });
+    products.forEach(p => { map[p.category] = (map[p.category] || 0) + p.quantity; });
     return Object.entries(map)
       .map(([name, value]) => ({ name, value }))
       .sort((a, b) => b.value - a.value);
@@ -139,52 +136,52 @@ export default function Dashboard() {
   return (
     <div className="ss-page">
       {/* Greeting */}
-      <h1 style={{ fontSize: '22px', fontWeight: '700', color: '#F1F5F9', margin: '0 0 4px' }}>
+      <h1 style={{ fontSize: '22px', fontWeight: '700', color: '#111827', margin: '0 0 4px' }}>
         {getGreeting()}, Manager.
       </h1>
-      <p style={{ fontSize: '14px', color: '#64748B', margin: '0 0 24px' }}>
+      <p style={{ fontSize: '14px', color: '#6B7280', margin: '0 0 24px' }}>
         Here's your store overview for Fresh Corner Market.
       </p>
 
       {/* AI Insight Banner */}
       <div style={{
         display: 'flex', gap: '14px', alignItems: 'flex-start',
-        background: 'linear-gradient(135deg, rgba(0,212,255,0.06), rgba(124,58,237,0.06))',
-        border: '1px solid rgba(0,212,255,0.2)',
+        background: '#ECFDF5',
+        border: '1px solid #A7F3D0',
         borderRadius: '12px', padding: '16px 20px', marginBottom: '28px',
       }}>
         <span style={{ fontSize: '22px', flexShrink: 0 }}>🤖</span>
         <div style={{ flex: 1 }}>
-          <span style={{ fontSize: '13px', fontWeight: '700', color: '#00D4FF', display: 'block', marginBottom: '4px' }}>
+          <span style={{ fontSize: '13px', fontWeight: '700', color: '#059669', display: 'block', marginBottom: '4px' }}>
             SmartStock AI
           </span>
-          <p style={{ fontSize: '14px', color: '#94A3B8', lineHeight: '1.65', margin: 0 }}>
+          <p style={{ fontSize: '14px', color: '#374151', lineHeight: '1.65', margin: 0 }}>
             You have{' '}
-            <strong style={{ color: '#00D4FF' }}>{lowStock.length} low-stock item{lowStock.length !== 1 ? 's' : ''}</strong>
+            <strong style={{ color: '#EF4444' }}>{lowStock.length} low-stock item{lowStock.length !== 1 ? 's' : ''}</strong>
             {' '}and{' '}
-            <strong style={{ color: '#00D4FF' }}>{expiringSoon.length} item{expiringSoon.length !== 1 ? 's' : ''} expiring soon</strong>.
+            <strong style={{ color: '#D97706' }}>{expiringSoon.length} item{expiringSoon.length !== 1 ? 's' : ''} expiring soon</strong>.
             {lowStock.length > 0
-              ? <> Consider placing orders for: <strong style={{ color: '#00D4FF' }}>{lowStockNames}</strong>.</>
+              ? <> Consider placing orders for: <strong style={{ color: '#059669' }}>{lowStockNames}</strong>.</>
               : ' All stock levels are currently healthy — great work!'}
           </p>
         </div>
       </div>
 
-      {/* ── Row 1: Low Stock (left) + Chart (right) ── */}
+      {/* ── Row 1: Low Stock + Chart ── */}
       <div className="ss-grid-2" style={{ marginBottom: '20px' }}>
 
-        {/* Panel 1 — Low Stock */}
+        {/* Low Stock */}
         <div style={card('#EF4444')}>
           <div style={cardHeader('#EF4444')}>
             <h2 style={sectionLabel('#EF4444')}>Low Stock Items</h2>
-            <span style={countChip('rgba(239,68,68,0.15)', '#EF4444')}>{lowStock.length}</span>
+            <span style={countChip('#FEE2E2', '#EF4444')}>{lowStock.length}</span>
           </div>
-          <div style={cardBody}>
+          <div style={cardBodyStyle}>
             {lowStock.length === 0 ? (
-              <div style={allGood}>✓ All stock levels healthy</div>
+              <div style={allGoodStyle}>✓ All stock levels healthy</div>
             ) : (
               lowStock.map(p => (
-                <div key={p.id} style={row}>
+                <div key={p.id} style={rowStyle}>
                   <div style={rowLeft}>
                     <Link to={`/product/${p.id}`} style={rowName}>{p.name}</Link>
                     <span style={rowSub}>Threshold: {p.lowStockThreshold}</span>
@@ -195,49 +192,48 @@ export default function Dashboard() {
               ))
             )}
           </div>
-          <div style={cardFooter}>
-            <Link to="/alerts" style={footerLink}>View All Alerts →</Link>
+          <div style={cardFooterStyle}>
+            <Link to="/alerts" style={footerLinkStyle}>View All Alerts →</Link>
           </div>
         </div>
 
-        {/* Panel 2 — Inventory by Category Chart */}
-        <div style={card('#7C3AED')}>
-          <div style={cardHeader('#7C3AED')}>
-            <div>
-              <h2 style={sectionLabel('#7C3AED')}>Inventory by Category</h2>
-            </div>
+        {/* Inventory by Category Chart */}
+        <div style={card('#059669')}>
+          <div style={cardHeader('#059669')}>
+            <h2 style={sectionLabel('#059669')}>Inventory by Category</h2>
           </div>
-          <div style={{ ...cardBody, paddingBottom: '6px' }}>
-            <p style={{ fontSize: '13px', color: '#64748B', margin: '0 0 14px' }}>
+          <div style={{ ...cardBodyStyle, paddingBottom: '6px' }}>
+            <p style={{ fontSize: '13px', color: '#6B7280', margin: '0 0 14px' }}>
               Stock distribution across product categories.
             </p>
             <ResponsiveContainer width="100%" height={260}>
               <BarChart data={chartData} margin={{ top: 6, right: 12, left: -10, bottom: 24 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1E2D45" vertical={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#F3F4F6" vertical={false} />
                 <XAxis
                   dataKey="name"
-                  tick={{ fill: '#64748B', fontSize: 11 }}
-                  axisLine={{ stroke: '#1E2D45' }}
+                  tick={{ fill: '#9CA3AF', fontSize: 11 }}
+                  axisLine={{ stroke: '#E5E7EB' }}
                   tickLine={false}
                   angle={-30}
                   textAnchor="end"
                   height={50}
                 />
                 <YAxis
-                  tick={{ fill: '#64748B', fontSize: 11 }}
+                  tick={{ fill: '#9CA3AF', fontSize: 11 }}
                   axisLine={false}
                   tickLine={false}
                   tickFormatter={v => v > 999 ? `${(v / 1000).toFixed(1)}k` : `${v}`}
                 />
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: '#111827',
-                    border: '1px solid #1E2D45',
+                    backgroundColor: '#FFFFFF',
+                    border: '1px solid #D1FAE5',
                     borderRadius: '8px',
-                    color: '#E2E8F0',
+                    color: '#111827',
                     fontSize: '13px',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
                   }}
-                  cursor={{ fill: 'rgba(0,212,255,0.06)' }}
+                  cursor={{ fill: 'rgba(16,185,129,0.06)' }}
                   formatter={(value) => [`${value} units`, 'Total Units']}
                 />
                 <Bar dataKey="value" radius={[6, 6, 0, 0]}>
@@ -254,18 +250,18 @@ export default function Dashboard() {
       {/* ── Row 2: Expiring Soon + Fast Moving ── */}
       <div className="ss-grid-2" style={{ marginBottom: '20px' }}>
 
-        {/* Panel 3 — Expiring Soon */}
+        {/* Expiring Soon */}
         <div style={card('#F59E0B')}>
           <div style={cardHeader('#F59E0B')}>
             <h2 style={sectionLabel('#F59E0B')}>Expiring Soon</h2>
-            <span style={countChip('rgba(245,158,11,0.15)', '#F59E0B')}>{expiringSoon.length}</span>
+            <span style={countChip('#FEF3C7', '#D97706')}>{expiringSoon.length}</span>
           </div>
-          <div style={cardBody}>
+          <div style={cardBodyStyle}>
             {expiringSoon.length === 0 ? (
-              <div style={allGood}>✓ No items expiring soon</div>
+              <div style={allGoodStyle}>✓ No items expiring soon</div>
             ) : (
               expiringSoon.map(p => (
-                <div key={p.id} style={row}>
+                <div key={p.id} style={rowStyle}>
                   <div style={rowLeft}>
                     <Link to={`/product/${p.id}`} style={rowName}>{p.name}</Link>
                     <span style={rowSub}>{formatDate(p.expiryDate)}</span>
@@ -277,20 +273,20 @@ export default function Dashboard() {
               ))
             )}
           </div>
-          <div style={cardFooter}>
-            <Link to="/alerts" style={footerLink}>View All Alerts →</Link>
+          <div style={cardFooterStyle}>
+            <Link to="/alerts" style={footerLinkStyle}>View All Alerts →</Link>
           </div>
         </div>
 
-        {/* Panel 4 — Fast-Moving */}
-        <div style={card('#00D4FF')}>
-          <div style={cardHeader('#00D4FF')}>
-            <h2 style={sectionLabel('#00D4FF')}>Fast-Moving Products</h2>
-            <span style={countChip('rgba(0,212,255,0.12)', '#00D4FF')}>{fastMoving.length}</span>
+        {/* Fast-Moving */}
+        <div style={card('#10B981')}>
+          <div style={cardHeader('#10B981')}>
+            <h2 style={sectionLabel('#10B981')}>Fast-Moving Products</h2>
+            <span style={countChip('#D1FAE5', '#059669')}>{fastMoving.length}</span>
           </div>
-          <div style={cardBody}>
+          <div style={cardBodyStyle}>
             {fastMoving.map(p => (
-              <div key={p.id} style={row}>
+              <div key={p.id} style={rowStyle}>
                 <div style={rowLeft}>
                   <Link to={`/product/${p.id}`} style={rowName}>{p.name}</Link>
                   <span style={rowSub}>Updated {formatDate(p.lastUpdated)}</span>
@@ -299,18 +295,18 @@ export default function Dashboard() {
               </div>
             ))}
           </div>
-          <div style={cardFooter}>
-            <Link to="/inventory" style={footerLink}>View Full Inventory →</Link>
+          <div style={cardFooterStyle}>
+            <Link to="/inventory" style={footerLinkStyle}>View Full Inventory →</Link>
           </div>
         </div>
       </div>
 
       {/* ── Row 3: Summary (full width) ── */}
-      <div style={{ ...card('#7C3AED'), borderRadius: '12px' }}>
-        <div style={cardHeader('#7C3AED')}>
-          <h2 style={sectionLabel('#7C3AED')}>Inventory Summary</h2>
+      <div style={{ ...card('#059669'), borderRadius: '12px' }}>
+        <div style={cardHeader('#059669')}>
+          <h2 style={sectionLabel('#059669')}>Inventory Summary</h2>
         </div>
-        <div style={{ ...cardBody, paddingTop: '18px' }}>
+        <div style={{ ...cardBodyStyle, paddingTop: '18px' }}>
           <div style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
@@ -335,15 +331,15 @@ export default function Dashboard() {
               <span style={summaryLabel}>Low Stock Alerts</span>
             </div>
             <div style={summaryItem}>
-              <span style={{ ...summaryValue, color: expiringSoon.length > 0 ? '#EF4444' : '#10B981' }}>
+              <span style={{ ...summaryValue, color: expiringSoon.length > 0 ? '#D97706' : '#10B981' }}>
                 {expiringSoon.length}
               </span>
               <span style={summaryLabel}>Expiry Alerts (7 days)</span>
             </div>
           </div>
         </div>
-        <div style={cardFooter}>
-          <Link to="/inventory" style={footerLink}>Manage Inventory →</Link>
+        <div style={cardFooterStyle}>
+          <Link to="/inventory" style={footerLinkStyle}>Manage Inventory →</Link>
         </div>
       </div>
     </div>

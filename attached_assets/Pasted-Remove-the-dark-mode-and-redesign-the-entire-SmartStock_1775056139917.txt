@@ -1,0 +1,77 @@
+Remove the dark mode and redesign the entire SmartStock app with a clean, 
+modern light theme using white backgrounds and light green accents.
+
+COLOUR PALETTE:
+- Page background: #F0FAF4 (very light green-white)
+- Card/panel background: #FFFFFF (pure white)
+- Card border: 1px solid #D1FAE5 (light green border)
+- Primary accent: #10B981 (emerald green)
+- Secondary accent: #059669 (deeper green)
+- Success/normal: #10B981
+- Warning/expiring: #F59E0B (amber)
+- Danger/low stock: #EF4444 (red)
+- Body text: #111827 (near black)
+- Muted text: #6B7280 (grey)
+- Input background: #FFFFFF
+
+NAVBAR:
+- Background: #FFFFFF, bottom border: 2px solid #D1FAE5
+- Logo "SmartStock" in bold #059669
+- Nav links: #6B7280, active link: #10B981 with a green underline
+- Box shadow: 0 1px 8px rgba(16, 185, 129, 0.08)
+
+CARDS & PANELS:
+- Background: #FFFFFF, border: 1px solid #D1FAE5, border-radius: 12px
+- Box shadow: 0 2px 8px rgba(16, 185, 129, 0.06)
+- Hover: box-shadow 0 4px 16px rgba(16, 185, 129, 0.12)
+- Panel section titles: uppercase, letter-spacing 0.08em, font-size 11px, color #059669
+
+DASHBOARD PANEL LEFT BORDER ACCENTS:
+- Low Stock panel: border-left 3px solid #EF4444
+- Expiring Soon panel: border-left 3px solid #F59E0B
+- Fast Moving panel: border-left 3px solid #10B981
+- Summary panel: border-left 3px solid #059669
+- AI Insight banner: background #ECFDF5, border: 1px solid #A7F3D0, border-radius 12px
+
+STAT CARDS (Total Products, Total Value, etc.):
+- Background: #FFFFFF, border: 1px solid #D1FAE5
+- Stat number: #111827, font-weight 700
+- Icons: #10B981
+- Low Stock Alerts number: #EF4444
+
+STATUS BADGES:
+- Low Stock: background #FEE2E2, color #EF4444, border 1px solid #FECACA
+- Expiring Soon: background #FEF3C7, color #D97706, border 1px solid #FDE68A
+- Normal: background #D1FAE5, color #059669, border 1px solid #A7F3D0
+- Border-radius: 20px, padding: 3px 10px, font-size: 12px, font-weight: 600
+
+BUTTONS:
+- Primary (Save/Add): background #10B981, color #FFFFFF, font-weight 600, 
+  border-radius 8px, border none
+  Hover: background #059669, box-shadow 0 4px 12px rgba(16,185,129,0.3)
+- Secondary (Cancel): background #FFFFFF, border 1px solid #D1D5DB, color #6B7280
+- Danger (Delete): background #FFFFFF, border 1px solid #EF4444, color #EF4444
+
+INPUTS & FORMS:
+- Background: #FFFFFF, border: 1px solid #D1FAE5, border-radius 8px, color #111827
+- Focus: border-color #10B981, box-shadow 0 0 0 3px rgba(16,185,129,0.15)
+- Labels: color #374151, font-size 13px, font-weight 500
+
+CHARTS:
+- Chart background: #FFFFFF
+- Bar colours: cycle through #10B981, #059669, #34D399
+- Grid lines: #F3F4F6
+- Axis labels: #9CA3AF
+
+TYPOGRAPHY:
+- Font: Inter — add to index.html:
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+- Body: font-family 'Inter', system-ui, sans-serif, color #111827
+- Page titles: font-weight 700, color #111827
+- Section labels: color #059669, uppercase, letter-spacing 0.08em
+
+GENERAL:
+- Body and all page wrappers: background #F0FAF4
+- Scrollbar: ::-webkit-scrollbar track #F0FAF4, thumb #A7F3D0
+- All transitions: transition: all 0.2s ease
+- Do not change any logic, routing, or data. Only update styles.

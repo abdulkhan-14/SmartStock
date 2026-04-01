@@ -28,9 +28,9 @@ function formatDateTime(iso) {
 }
 
 const statusConfig = {
-  low:      { label: 'Low Stock',     bg: 'rgba(239,68,68,0.1)',  color: '#EF4444', border: 'rgba(239,68,68,0.3)' },
-  expiring: { label: 'Expiring Soon', bg: 'rgba(245,158,11,0.1)', color: '#F59E0B', border: 'rgba(245,158,11,0.3)' },
-  normal:   { label: 'Normal',        bg: 'rgba(16,185,129,0.1)', color: '#10B981', border: 'rgba(16,185,129,0.3)' },
+  low:      { label: 'Low Stock',     bg: '#FEE2E2', color: '#EF4444', border: '#FECACA' },
+  expiring: { label: 'Expiring Soon', bg: '#FEF3C7', color: '#D97706', border: '#FDE68A' },
+  normal:   { label: 'Normal',        bg: '#D1FAE5', color: '#059669', border: '#A7F3D0' },
 };
 
 function StatusBadge({ status }) {
@@ -68,7 +68,7 @@ function generateHistory(product) {
 const s = {
   backLink: {
     display: 'inline-flex', alignItems: 'center', gap: '6px',
-    color: '#00D4FF', fontSize: '14px', fontWeight: '500', marginBottom: '20px',
+    color: '#10B981', fontSize: '14px', fontWeight: '500', marginBottom: '20px',
     transition: 'opacity 0.2s',
   },
   header: {
@@ -76,73 +76,73 @@ const s = {
     gap: '16px', marginBottom: '24px', flexWrap: 'wrap',
   },
   headerLeft: { display: 'flex', flexDirection: 'column', gap: '10px' },
-  productName: { fontSize: '26px', fontWeight: '700', color: '#F1F5F9', margin: 0 },
+  productName: { fontSize: '26px', fontWeight: '700', color: '#111827', margin: 0 },
   headerMeta: { display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' },
   categoryChip: {
     display: 'inline-block', padding: '3px 10px', borderRadius: '6px',
     fontSize: '13px', fontWeight: '500',
-    backgroundColor: 'rgba(0,212,255,0.08)', color: '#00D4FF', border: '1px solid rgba(0,212,255,0.2)',
+    backgroundColor: '#ECFDF5', color: '#059669', border: '1px solid #A7F3D0',
   },
   card: {
-    backgroundColor: '#111827', border: '1px solid #1E2D45',
+    backgroundColor: '#FFFFFF', border: '1px solid #D1FAE5',
     borderRadius: '12px', padding: '24px', marginBottom: '20px',
-    boxShadow: '0 4px 16px rgba(0,0,0,0.2)',
-    transition: 'box-shadow 0.2s ease',
+    boxShadow: '0 2px 8px rgba(16,185,129,0.06)',
   },
   cardTitle: {
-    fontSize: '11px', fontWeight: '700', color: '#00D4FF',
-    textTransform: 'uppercase', letterSpacing: '0.1em',
-    marginBottom: '16px', paddingBottom: '10px', borderBottom: '1px solid #1E2D45',
+    fontSize: '11px', fontWeight: '700', color: '#059669',
+    textTransform: 'uppercase', letterSpacing: '0.08em',
+    marginBottom: '16px', paddingBottom: '10px', borderBottom: '1px solid #D1FAE5',
   },
   detailItem: { display: 'flex', flexDirection: 'column', gap: '4px' },
-  detailLabel: { fontSize: '11px', fontWeight: '600', color: '#64748B', textTransform: 'uppercase', letterSpacing: '0.06em' },
-  detailValue: { fontSize: '16px', fontWeight: '600', color: '#E2E8F0' },
-  detailValueSub: { fontSize: '13px', color: '#64748B' },
+  detailLabel: { fontSize: '11px', fontWeight: '600', color: '#9CA3AF', textTransform: 'uppercase', letterSpacing: '0.06em' },
+  detailValue: { fontSize: '16px', fontWeight: '600', color: '#111827' },
+  detailValueSub: { fontSize: '13px', color: '#6B7280' },
   qtyForm: { display: 'flex', gap: '10px', alignItems: 'center' },
   qtyInput: {
     width: '130px', padding: '9px 12px', fontSize: '15px', fontFamily: 'inherit',
-    backgroundColor: '#1E293B', border: '1px solid #334155', borderRadius: '8px',
-    outline: 'none', color: '#E2E8F0', boxSizing: 'border-box',
+    backgroundColor: '#FFFFFF', border: '1px solid #D1FAE5', borderRadius: '8px',
+    outline: 'none', color: '#111827', boxSizing: 'border-box',
     transition: 'all 0.2s ease',
   },
   successMsg: {
     padding: '8px 14px',
-    backgroundColor: 'rgba(16,185,129,0.1)', color: '#10B981',
-    border: '1px solid rgba(16,185,129,0.3)', borderRadius: '8px',
+    backgroundColor: '#D1FAE5', color: '#059669',
+    border: '1px solid #A7F3D0', borderRadius: '8px',
     fontSize: '13px', fontWeight: '500',
   },
   historyTable: { width: '100%', borderCollapse: 'collapse', fontSize: '14px' },
   historyTh: {
     textAlign: 'left', padding: '8px 12px',
-    backgroundColor: 'rgba(0,0,0,0.2)', color: '#64748B',
+    backgroundColor: '#F9FAFB', color: '#6B7280',
     fontSize: '11px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.06em',
-    borderBottom: '1px solid #1E2D45',
+    borderBottom: '1px solid #E5E7EB',
   },
   historyTd: {
-    padding: '10px 12px', color: '#94A3B8',
-    borderBottom: '1px solid rgba(255,255,255,0.04)', verticalAlign: 'middle',
+    padding: '10px 12px', color: '#374151',
+    borderBottom: '1px solid #F3F4F6', verticalAlign: 'middle',
   },
-  historyNote: { fontSize: '12px', color: '#475569', fontStyle: 'italic' },
+  historyNote: { fontSize: '12px', color: '#9CA3AF', fontStyle: 'italic' },
   qtyDot: { display: 'inline-block', width: '8px', height: '8px', borderRadius: '50%', marginRight: '6px' },
   aiNote: {
-    background: 'linear-gradient(135deg, rgba(245,158,11,0.06), rgba(239,68,68,0.06))',
-    border: '1px solid rgba(245,158,11,0.25)',
+    backgroundColor: '#FFFBEB',
+    border: '1px solid #FDE68A',
     borderLeft: '3px solid #F59E0B',
     borderRadius: '12px', padding: '16px 18px', marginBottom: '20px',
     display: 'flex', gap: '12px', alignItems: 'flex-start',
+    boxShadow: '0 2px 8px rgba(245,158,11,0.06)',
   },
-  aiNoteText: { fontSize: '14px', color: '#94A3B8', lineHeight: '1.65', margin: 0 },
+  aiNoteText: { fontSize: '14px', color: '#92400E', lineHeight: '1.65', margin: 0 },
 };
 
 export default function ProductDetail() {
-  const { id } = useParams();
-  const navigate = useNavigate();
+  const { id }        = useParams();
+  const navigate      = useNavigate();
   const { products, isLoading, updateProduct } = useAppContext();
 
   const product = products.find(p => p.id === id);
-  const status = product ? getStatus(product) : null;
+  const status  = product ? getStatus(product) : null;
 
-  const [newQty, setNewQty] = useState('');
+  const [newQty, setNewQty]         = useState('');
   const [showSuccess, setShowSuccess] = useState(false);
   const [qtyFocused, setQtyFocused] = useState(false);
 
@@ -174,13 +174,12 @@ export default function ProductDetail() {
     return (
       <div className="ss-page" style={{ maxWidth: '780px', margin: '0 auto' }}>
         <Link to="/inventory" style={s.backLink}>← Back to Inventory</Link>
-        <div style={{ color: '#64748B', fontSize: '15px' }}>Product not found.</div>
+        <div style={{ color: '#6B7280', fontSize: '15px' }}>Product not found.</div>
       </div>
     );
   }
 
   const maxHistoryQty = Math.max(...history.map(h => h.quantity));
-
   const barColor = (qty) =>
     qty <= product.lowStockThreshold ? '#EF4444'
     : qty <= product.lowStockThreshold * 1.5 ? '#F59E0B'
@@ -207,15 +206,15 @@ export default function ProductDetail() {
         <div style={s.aiNote}>
           <span style={{ fontSize: '20px', flexShrink: 0 }}>🤖</span>
           <p style={s.aiNoteText}>
-            <strong style={{ color: '#F59E0B' }}>AI Suggestion:</strong>{' '}
+            <strong style={{ color: '#D97706' }}>AI Suggestion:</strong>{' '}
             Consider reordering this item soon. Based on current stock (
-            <strong style={{ color: '#E2E8F0' }}>{product.quantity} units remaining</strong>),
+            <strong>{product.quantity} units remaining</strong>),
             you may run out before your next delivery.
           </p>
         </div>
       )}
 
-      {/* Details card */}
+      {/* Details */}
       <div style={s.card}>
         <div style={s.cardTitle}>Product Details</div>
         <div className="ss-details-grid">
@@ -234,7 +233,7 @@ export default function ProductDetail() {
           </div>
           <div style={s.detailItem}>
             <span style={s.detailLabel}>Supplier</span>
-            <span style={product.supplier ? s.detailValue : { ...s.detailValue, color: '#475569', fontStyle: 'italic' }}>
+            <span style={product.supplier ? s.detailValue : { ...s.detailValue, color: '#9CA3AF', fontStyle: 'italic' }}>
               {product.supplier || 'Not specified'}
             </span>
           </div>
@@ -245,7 +244,7 @@ export default function ProductDetail() {
         </div>
       </div>
 
-      {/* Quick Update Quantity */}
+      {/* Quick Update */}
       <div style={s.card}>
         <div style={s.cardTitle}>Quick Update Quantity</div>
         <form onSubmit={handleQtySave} style={s.qtyForm}>
@@ -256,8 +255,8 @@ export default function ProductDetail() {
             onBlur={() => setQtyFocused(false)}
             style={{
               ...s.qtyInput,
-              borderColor: qtyFocused ? '#00D4FF' : '#334155',
-              boxShadow: qtyFocused ? '0 0 0 3px rgba(0,212,255,0.15)' : 'none',
+              borderColor: qtyFocused ? '#10B981' : '#D1FAE5',
+              boxShadow: qtyFocused ? '0 0 0 3px rgba(16,185,129,0.15)' : 'none',
             }}
           />
           <button type="submit" className="ss-btn ss-btn-primary">Save</button>
@@ -265,7 +264,7 @@ export default function ProductDetail() {
         </form>
       </div>
 
-      {/* Quantity History */}
+      {/* History */}
       <div style={s.card}>
         <div style={s.cardTitle}>Quantity History</div>
         <table style={s.historyTable}>
@@ -279,22 +278,21 @@ export default function ProductDetail() {
           </thead>
           <tbody>
             {history.map((entry, i) => {
-              const pct = Math.round((entry.quantity / maxHistoryQty) * 100);
+              const pct   = Math.round((entry.quantity / maxHistoryQty) * 100);
               const color = barColor(entry.quantity);
               return (
                 <tr key={i}>
                   <td style={s.historyTd}>{formatDate(entry.date)}</td>
-                  <td style={{ ...s.historyTd, fontWeight: '600', color: '#E2E8F0' }}>
+                  <td style={{ ...s.historyTd, fontWeight: '600', color: '#111827' }}>
                     <span style={{ ...s.qtyDot, backgroundColor: color }} />
                     {entry.quantity}
                   </td>
                   <td style={s.historyTd}><span style={s.historyNote}>{entry.note}</span></td>
                   <td style={{ ...s.historyTd, minWidth: '120px' }}>
-                    <div style={{ backgroundColor: '#1E293B', borderRadius: '4px', height: '6px', overflow: 'hidden' }}>
+                    <div style={{ backgroundColor: '#F0FAF4', borderRadius: '4px', height: '6px', overflow: 'hidden', border: '1px solid #D1FAE5' }}>
                       <div style={{
                         width: `${pct}%`, height: '100%', backgroundColor: color,
                         borderRadius: '4px', transition: 'width 0.3s',
-                        boxShadow: `0 0 6px ${color}60`,
                       }} />
                     </div>
                   </td>

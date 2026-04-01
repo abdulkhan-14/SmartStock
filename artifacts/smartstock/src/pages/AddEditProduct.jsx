@@ -6,31 +6,31 @@ const CATEGORIES = ['Produce', 'Dairy', 'Bakery', 'Beverages', 'Snacks', 'Frozen
 
 const styles = {
   pageTitle: {
-    fontSize: '24px', fontWeight: '700', color: '#F1F5F9',
-    marginBottom: '24px', paddingBottom: '12px', borderBottom: '1px solid #1E2D45',
+    fontSize: '24px', fontWeight: '700', color: '#111827',
+    marginBottom: '24px', paddingBottom: '12px', borderBottom: '1px solid #D1FAE5',
   },
   card: {
-    backgroundColor: '#111827', border: '1px solid #1E2D45',
+    backgroundColor: '#FFFFFF', border: '1px solid #D1FAE5',
     borderRadius: '12px', padding: '28px',
-    boxShadow: '0 4px 24px rgba(0,0,0,0.3)',
+    boxShadow: '0 2px 8px rgba(16,185,129,0.06)',
   },
   fieldGroup: { display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '20px' },
-  label: { fontSize: '13px', fontWeight: '500', color: '#94A3B8' },
+  label: { fontSize: '13px', fontWeight: '500', color: '#374151' },
   required: { color: '#EF4444', marginLeft: '3px' },
   errorText: { fontSize: '12px', color: '#EF4444', marginTop: '2px' },
-  divider: { borderTop: '1px solid #1E2D45', margin: '24px 0' },
+  divider: { borderTop: '1px solid #D1FAE5', margin: '24px 0' },
   overlay: {
-    position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.7)',
+    position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.4)',
     display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000,
-    backdropFilter: 'blur(4px)',
+    backdropFilter: 'blur(2px)',
   },
   dialog: {
-    backgroundColor: '#111827', border: '1px solid #1E2D45',
+    backgroundColor: '#FFFFFF', border: '1px solid #D1FAE5',
     borderRadius: '12px', padding: '28px',
-    maxWidth: '420px', width: '90%', boxShadow: '0 24px 64px rgba(0,0,0,0.6)',
+    maxWidth: '420px', width: '90%', boxShadow: '0 16px 48px rgba(0,0,0,0.12)',
   },
-  dialogTitle: { fontSize: '18px', fontWeight: '700', color: '#F1F5F9', marginBottom: '10px' },
-  dialogBody: { fontSize: '14px', color: '#94A3B8', marginBottom: '24px', lineHeight: '1.6' },
+  dialogTitle: { fontSize: '18px', fontWeight: '700', color: '#111827', marginBottom: '10px' },
+  dialogBody: { fontSize: '14px', color: '#6B7280', marginBottom: '24px', lineHeight: '1.6' },
   dialogActions: { display: 'flex', justifyContent: 'flex-end', gap: '10px' },
 };
 
@@ -38,10 +38,10 @@ function inputStyle(isFocused, hasError) {
   return {
     width: '100%', boxSizing: 'border-box',
     padding: '10px 12px', fontSize: '15px', fontFamily: 'inherit',
-    backgroundColor: '#1E293B', color: '#E2E8F0',
-    border: `1px solid ${hasError ? '#EF4444' : isFocused ? '#00D4FF' : '#334155'}`,
+    backgroundColor: '#FFFFFF', color: '#111827',
+    border: `1px solid ${hasError ? '#EF4444' : isFocused ? '#10B981' : '#D1FAE5'}`,
     borderRadius: '8px', outline: 'none',
-    boxShadow: isFocused ? (hasError ? '0 0 0 3px rgba(239,68,68,0.15)' : '0 0 0 3px rgba(0,212,255,0.15)') : 'none',
+    boxShadow: isFocused ? (hasError ? '0 0 0 3px rgba(239,68,68,0.12)' : '0 0 0 3px rgba(16,185,129,0.15)') : 'none',
     transition: 'all 0.2s ease',
   };
 }
@@ -50,8 +50,8 @@ function selectStyle(hasError) {
   return {
     width: '100%', boxSizing: 'border-box',
     padding: '10px 12px', fontSize: '15px', fontFamily: 'inherit',
-    backgroundColor: '#1E293B', color: '#E2E8F0',
-    border: `1px solid ${hasError ? '#EF4444' : '#334155'}`,
+    backgroundColor: '#FFFFFF', color: '#111827',
+    border: `1px solid ${hasError ? '#EF4444' : '#D1FAE5'}`,
     borderRadius: '8px', outline: 'none', cursor: 'pointer',
   };
 }
@@ -70,17 +70,17 @@ function FormField({ label, required, error, children }) {
 }
 
 export default function AddEditProduct() {
-  const { id } = useParams();
-  const navigate = useNavigate();
+  const { id }       = useParams();
+  const navigate     = useNavigate();
   const { products, addProduct, updateProduct, deleteProduct } = useAppContext();
 
-  const isEditMode = Boolean(id);
+  const isEditMode      = Boolean(id);
   const existingProduct = isEditMode ? products.find(p => p.id === id) : null;
 
   const [form, setForm] = useState({
     name: '', category: '', quantity: '', expiryDate: '', supplier: '', lowStockThreshold: '10',
   });
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors]             = useState({});
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [focusedField, setFocusedField] = useState(null);
 
@@ -108,9 +108,8 @@ export default function AddEditProduct() {
     const newErrors = {};
     if (!form.name.trim()) newErrors.name = 'Product name is required.';
     if (!form.category) newErrors.category = 'Please select a category.';
-    if (form.quantity === '' || isNaN(Number(form.quantity)) || Number(form.quantity) < 0) {
+    if (form.quantity === '' || isNaN(Number(form.quantity)) || Number(form.quantity) < 0)
       newErrors.quantity = 'Enter a valid quantity (0 or more).';
-    }
     if (!form.expiryDate) newErrors.expiryDate = 'Expiry date is required.';
     return newErrors;
   }
@@ -139,7 +138,7 @@ export default function AddEditProduct() {
   if (isEditMode && !existingProduct) {
     return (
       <div className="ss-page" style={{ maxWidth: '640px', margin: '0 auto' }}>
-        <p style={{ color: '#64748B' }}>Product not found.</p>
+        <p style={{ color: '#6B7280' }}>Product not found.</p>
       </div>
     );
   }
@@ -193,7 +192,7 @@ export default function AddEditProduct() {
             <input
               type="date" name="expiryDate" value={form.expiryDate} onChange={handleChange}
               onFocus={() => setFocusedField('expiryDate')} onBlur={() => setFocusedField(null)}
-              style={{ ...inputStyle(focusedField === 'expiryDate', !!errors.expiryDate), colorScheme: 'dark' }}
+              style={inputStyle(focusedField === 'expiryDate', !!errors.expiryDate)}
             />
           </FormField>
 
@@ -227,7 +226,7 @@ export default function AddEditProduct() {
           <div style={styles.dialog}>
             <div style={styles.dialogTitle}>Delete Product?</div>
             <div style={styles.dialogBody}>
-              Are you sure you want to delete <strong style={{ color: '#E2E8F0' }}>{existingProduct?.name}</strong>?
+              Are you sure you want to delete <strong style={{ color: '#111827' }}>{existingProduct?.name}</strong>?
               This action cannot be undone.
             </div>
             <div style={styles.dialogActions}>

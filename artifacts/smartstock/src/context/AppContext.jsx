@@ -21,6 +21,12 @@ export function AppProvider({ children }) {
     return sampleData;
   });
 
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, []);
+
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
@@ -53,7 +59,7 @@ export function AppProvider({ children }) {
   }
 
   return (
-    <AppContext.Provider value={{ products, addProduct, updateProduct, deleteProduct }}>
+    <AppContext.Provider value={{ products, isLoading, addProduct, updateProduct, deleteProduct }}>
       {children}
     </AppContext.Provider>
   );

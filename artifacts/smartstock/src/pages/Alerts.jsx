@@ -17,7 +17,6 @@ function formatDate(iso) {
 }
 
 const styles = {
-  page: { padding: '28px 32px', maxWidth: '860px', margin: '0 auto' },
   header: { display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '28px' },
   pageTitle: { fontSize: '22px', fontWeight: '700', color: '#1F4E79', margin: 0 },
   totalBadge: {
@@ -35,8 +34,7 @@ const styles = {
   section: { marginBottom: '32px' },
   sectionHeader: {
     display: 'flex', alignItems: 'center', gap: '10px',
-    marginBottom: '14px', paddingBottom: '10px',
-    borderBottom: '2px solid #e5e7eb',
+    marginBottom: '14px', paddingBottom: '10px', borderBottom: '2px solid #e5e7eb',
   },
   sectionTitle: { fontSize: '16px', fontWeight: '700', color: '#111827', margin: 0 },
   sectionCount: {
@@ -47,44 +45,29 @@ const styles = {
     padding: '2px 8px', borderRadius: '999px', fontSize: '12px', fontWeight: '600',
     backgroundColor: '#dcfce7', color: '#16a34a',
   },
-  alertCard: {
-    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-    backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: '8px',
-    padding: '14px 18px', marginBottom: '10px',
-    boxShadow: '0 1px 4px rgba(0,0,0,0.04)',
-  },
   cardLeft: { display: 'flex', flexDirection: 'column', gap: '4px', flex: 1 },
   productName: { fontSize: '15px', fontWeight: '600', color: '#111827' },
-  cardMeta: { display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' },
+  cardMeta: { display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap', marginTop: '2px' },
   metaItem: { fontSize: '13px', color: '#6b7280' },
   metaValue: { fontWeight: '600', color: '#374151' },
   urgencyRed: {
     display: 'inline-block', padding: '3px 10px', borderRadius: '999px',
     fontSize: '12px', fontWeight: '600',
-    backgroundColor: '#fef2f2', color: '#dc2626', border: '1px solid #fca5a5',
-    whiteSpace: 'nowrap',
+    backgroundColor: '#fef2f2', color: '#dc2626', border: '1px solid #fca5a5', whiteSpace: 'nowrap',
   },
   urgencyOrange: {
     display: 'inline-block', padding: '3px 10px', borderRadius: '999px',
     fontSize: '12px', fontWeight: '600',
-    backgroundColor: '#fff7ed', color: '#c2410c', border: '1px solid #fdba74',
-    whiteSpace: 'nowrap',
+    backgroundColor: '#fff7ed', color: '#c2410c', border: '1px solid #fdba74', whiteSpace: 'nowrap',
   },
   categoryPill: {
     display: 'inline-block', padding: '2px 8px', borderRadius: '4px',
     fontSize: '12px', fontWeight: '500',
     backgroundColor: '#eff6ff', color: '#1d4ed8', border: '1px solid #bfdbfe',
   },
-  actionBtn: {
-    padding: '7px 14px', backgroundColor: '#1F4E79', color: '#fff',
-    border: 'none', borderRadius: '6px', fontSize: '13px', fontWeight: '600',
-    cursor: 'pointer', textDecoration: 'none', whiteSpace: 'nowrap',
-    display: 'inline-block', flexShrink: 0, marginLeft: '16px',
-  },
   aiCard: {
     backgroundColor: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: '8px',
-    padding: '14px 18px', marginBottom: '10px',
-    boxShadow: '0 1px 4px rgba(0,0,0,0.04)',
+    padding: '14px 18px', marginBottom: '10px', boxShadow: '0 1px 4px rgba(0,0,0,0.04)',
   },
   aiCardText: { fontSize: '14px', color: '#1e3a5f', lineHeight: '1.6', margin: 0 },
   allGood: {
@@ -98,15 +81,13 @@ function SectionHeader({ title, count }) {
   return (
     <div style={styles.sectionHeader}>
       <h2 style={styles.sectionTitle}>{title}</h2>
-      <span style={count > 0 ? styles.sectionCount : styles.sectionCountOk}>
-        {count}
-      </span>
+      <span style={count > 0 ? styles.sectionCount : styles.sectionCountOk}>{count}</span>
     </div>
   );
 }
 
 export default function Alerts() {
-  const { products } = useAppContext();
+  const { products, isLoading } = useAppContext();
 
   const lowStockItems = useMemo(
     () => products.filter(p => p.quantity <= p.lowStockThreshold),
@@ -124,13 +105,20 @@ export default function Alerts() {
 
   const totalAlerts = lowStockItems.length + expiringSoonItems.length;
 
+  if (isLoading) {
+    return (
+      <div className="ss-loading">
+        <div className="ss-loading-spinner" />
+        Loading alerts…
+      </div>
+    );
+  }
+
   return (
-    <div style={styles.page}>
+    <div className="ss-page" style={{ maxWidth: '860px', margin: '0 auto' }}>
       <div style={styles.header}>
         <h1 style={styles.pageTitle}>Alerts</h1>
-        <span style={totalAlerts > 0 ? styles.totalBadge : styles.zeroBadge}>
-          {totalAlerts}
-        </span>
+        <span style={totalAlerts > 0 ? styles.totalBadge : styles.zeroBadge}>{totalAlerts}</span>
         <span style={{ fontSize: '13px', color: '#6b7280' }}>
           {totalAlerts === 1 ? 'active alert' : 'active alerts'}
         </span>
@@ -140,12 +128,10 @@ export default function Alerts() {
       <div style={styles.section}>
         <SectionHeader title="Low Stock Alerts" count={lowStockItems.length} />
         {lowStockItems.length === 0 ? (
-          <div style={styles.allGood}>
-            No alerts in this category — you're all good!
-          </div>
+          <div style={styles.allGood}>No alerts in this category — you're all good!</div>
         ) : (
           lowStockItems.map(product => (
-            <div key={product.id} style={styles.alertCard}>
+            <div key={product.id} className="ss-alert-card">
               <div style={styles.cardLeft}>
                 <span style={styles.productName}>{product.name}</span>
                 <div style={styles.cardMeta}>
@@ -161,12 +147,7 @@ export default function Alerts() {
                   </span>
                 </div>
               </div>
-              <Link
-                to={`/edit/${product.id}`}
-                style={styles.actionBtn}
-                onMouseOver={e => e.currentTarget.style.backgroundColor = '#163d63'}
-                onMouseOut={e => e.currentTarget.style.backgroundColor = '#1F4E79'}
-              >
+              <Link to={`/edit/${product.id}`} className="ss-btn ss-btn-primary">
                 Update Quantity
               </Link>
             </div>
@@ -178,14 +159,10 @@ export default function Alerts() {
       <div style={styles.section}>
         <SectionHeader title="Expiring Soon" count={expiringSoonItems.length} />
         {expiringSoonItems.length === 0 ? (
-          <div style={styles.allGood}>
-            No alerts in this category — you're all good!
-          </div>
+          <div style={styles.allGood}>No alerts in this category — you're all good!</div>
         ) : (
           expiringSoonItems.map(product => {
-            const urgencyStyle = product.daysLeft <= 2
-              ? styles.urgencyRed
-              : styles.urgencyOrange;
+            const urgencyStyle = product.daysLeft <= 2 ? styles.urgencyRed : styles.urgencyOrange;
             const urgencyText = product.daysLeft <= 0
               ? 'Expires today!'
               : product.daysLeft === 1
@@ -193,7 +170,7 @@ export default function Alerts() {
               : `Expires in ${product.daysLeft} days`;
 
             return (
-              <div key={product.id} style={styles.alertCard}>
+              <div key={product.id} className="ss-alert-card">
                 <div style={styles.cardLeft}>
                   <span style={styles.productName}>{product.name}</span>
                   <div style={styles.cardMeta}>
@@ -204,12 +181,7 @@ export default function Alerts() {
                     <span style={urgencyStyle}>{urgencyText}</span>
                   </div>
                 </div>
-                <Link
-                  to={`/edit/${product.id}`}
-                  style={styles.actionBtn}
-                  onMouseOver={e => e.currentTarget.style.backgroundColor = '#163d63'}
-                  onMouseOut={e => e.currentTarget.style.backgroundColor = '#1F4E79'}
-                >
+                <Link to={`/edit/${product.id}`} className="ss-btn ss-btn-primary">
                   Update Stock
                 </Link>
               </div>
@@ -222,9 +194,7 @@ export default function Alerts() {
       <div style={styles.section}>
         <SectionHeader title="AI Reorder Suggestions" count={lowStockItems.length} />
         {lowStockItems.length === 0 ? (
-          <div style={styles.allGood}>
-            No alerts in this category — you're all good!
-          </div>
+          <div style={styles.allGood}>No alerts in this category — you're all good!</div>
         ) : (
           lowStockItems.map(product => {
             const suggested = product.lowStockThreshold * 3;

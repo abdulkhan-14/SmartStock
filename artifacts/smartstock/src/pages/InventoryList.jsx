@@ -18,7 +18,6 @@ function getStatus(product) {
   const daysUntilExpiry = Math.ceil((expiry - today) / (1000 * 60 * 60 * 24));
   const isLow = product.quantity <= product.lowStockThreshold;
   const isExpiringSoon = daysUntilExpiry <= 7;
-
   if (isLow) return 'low';
   if (isExpiringSoon) return 'expiring';
   return 'normal';
@@ -26,28 +25,22 @@ function getStatus(product) {
 
 function formatDate(iso) {
   if (!iso) return '—';
-  const d = new Date(iso);
-  return d.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
+  return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
 }
 
 const statusConfig = {
-  low: { label: 'Low Stock', bg: '#fef2f2', color: '#dc2626', border: '#fca5a5' },
+  low:      { label: 'Low Stock',     bg: '#fef2f2', color: '#dc2626', border: '#fca5a5' },
   expiring: { label: 'Expiring Soon', bg: '#fff7ed', color: '#c2410c', border: '#fdba74' },
-  normal: { label: 'Normal', bg: '#f0fdf4', color: '#16a34a', border: '#86efac' },
+  normal:   { label: 'Normal',        bg: '#f0fdf4', color: '#16a34a', border: '#86efac' },
 };
 
 function StatusBadge({ status }) {
   const cfg = statusConfig[status];
   return (
     <span style={{
-      display: 'inline-block',
-      padding: '3px 10px',
-      borderRadius: '999px',
-      fontSize: '12px',
-      fontWeight: '600',
-      backgroundColor: cfg.bg,
-      color: cfg.color,
-      border: `1px solid ${cfg.border}`,
+      display: 'inline-block', padding: '3px 10px', borderRadius: '999px',
+      fontSize: '12px', fontWeight: '600',
+      backgroundColor: cfg.bg, color: cfg.color, border: `1px solid ${cfg.border}`,
       whiteSpace: 'nowrap',
     }}>
       {cfg.label}
@@ -56,120 +49,29 @@ function StatusBadge({ status }) {
 }
 
 const styles = {
-  page: {
-    padding: '28px 32px',
-  },
-  header: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: '20px',
-  },
-  pageTitle: {
-    fontSize: '22px',
-    fontWeight: '700',
-    color: '#1F4E79',
-    margin: 0,
-  },
-  btnAdd: {
-    padding: '9px 18px',
-    backgroundColor: '#1F4E79',
-    color: '#ffffff',
-    border: 'none',
-    borderRadius: '6px',
-    fontSize: '14px',
-    fontWeight: '600',
-    cursor: 'pointer',
-    textDecoration: 'none',
-    display: 'inline-block',
-  },
-  controls: {
-    display: 'flex',
-    gap: '12px',
-    marginBottom: '16px',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-  },
-  searchInput: {
-    flex: '1',
-    minWidth: '200px',
-    padding: '9px 12px',
-    fontSize: '14px',
-    border: '1px solid #d1d5db',
-    borderRadius: '6px',
-    outline: 'none',
-    backgroundColor: '#f9fafb',
-    color: '#111827',
-  },
-  select: {
-    padding: '9px 12px',
-    fontSize: '14px',
-    border: '1px solid #d1d5db',
-    borderRadius: '6px',
-    outline: 'none',
-    backgroundColor: '#f9fafb',
-    color: '#111827',
-    cursor: 'pointer',
-  },
-  resultCount: {
-    fontSize: '13px',
-    color: '#6b7280',
-    marginBottom: '12px',
-  },
-  tableWrapper: {
-    overflowX: 'auto',
-    border: '1px solid #e5e7eb',
-    borderRadius: '10px',
-    boxShadow: '0 1px 6px rgba(0,0,0,0.05)',
-  },
-  table: {
-    width: '100%',
-    borderCollapse: 'collapse',
-    fontSize: '14px',
-  },
+  pageTitle: { fontSize: '22px', fontWeight: '700', color: '#1F4E79', margin: 0 },
+  resultCount: { fontSize: '13px', color: '#6b7280', marginBottom: '12px' },
+  table: { width: '100%', borderCollapse: 'collapse', fontSize: '14px' },
   th: {
-    backgroundColor: '#f8fafc',
-    color: '#374151',
-    fontWeight: '600',
-    fontSize: '12px',
-    textTransform: 'uppercase',
-    letterSpacing: '0.04em',
-    padding: '12px 16px',
-    textAlign: 'left',
-    borderBottom: '1px solid #e5e7eb',
-    whiteSpace: 'nowrap',
+    backgroundColor: '#f8fafc', color: '#374151', fontWeight: '600',
+    fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.04em',
+    padding: '12px 16px', textAlign: 'left', borderBottom: '1px solid #e5e7eb', whiteSpace: 'nowrap',
   },
   td: {
-    padding: '13px 16px',
-    color: '#111827',
-    borderBottom: '1px solid #f1f5f9',
-    verticalAlign: 'middle',
+    padding: '13px 16px', color: '#111827',
+    borderBottom: '1px solid #f1f5f9', verticalAlign: 'middle',
   },
-  productLink: {
-    color: '#1F4E79',
-    textDecoration: 'none',
-    fontWeight: '600',
-  },
+  productLink: { color: '#1F4E79', fontWeight: '600' },
   categoryTag: {
-    display: 'inline-block',
-    padding: '2px 8px',
-    borderRadius: '4px',
-    fontSize: '12px',
-    fontWeight: '500',
-    backgroundColor: '#eff6ff',
-    color: '#1d4ed8',
-    border: '1px solid #bfdbfe',
+    display: 'inline-block', padding: '2px 8px', borderRadius: '4px',
+    fontSize: '12px', fontWeight: '500',
+    backgroundColor: '#eff6ff', color: '#1d4ed8', border: '1px solid #bfdbfe',
   },
-  empty: {
-    textAlign: 'center',
-    padding: '48px',
-    color: '#6b7280',
-    fontSize: '15px',
-  },
+  empty: { textAlign: 'center', padding: '48px', color: '#6b7280', fontSize: '15px' },
 };
 
 export default function InventoryList() {
-  const { products } = useAppContext();
+  const { products, isLoading } = useAppContext();
   const navigate = useNavigate();
 
   const [search, setSearch] = useState('');
@@ -179,18 +81,15 @@ export default function InventoryList() {
 
   const filtered = useMemo(() => {
     let result = [...products];
-
     if (search.trim()) {
       const q = search.trim().toLowerCase();
       result = result.filter(p =>
         p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q)
       );
     }
-
     if (categoryFilter !== 'All') {
       result = result.filter(p => p.category === categoryFilter);
     }
-
     result.sort((a, b) => {
       if (sort === 'name-asc') return a.name.localeCompare(b.name);
       if (sort === 'qty-asc') return a.quantity - b.quantity;
@@ -198,36 +97,38 @@ export default function InventoryList() {
       if (sort === 'expiry-asc') return new Date(a.expiryDate) - new Date(b.expiryDate);
       return 0;
     });
-
     return result;
   }, [products, search, categoryFilter, sort]);
 
+  if (isLoading) {
+    return (
+      <div className="ss-loading">
+        <div className="ss-loading-spinner" />
+        Loading inventory…
+      </div>
+    );
+  }
+
   return (
-    <div style={styles.page}>
-      <div style={styles.header}>
+    <div className="ss-page">
+      <div className="ss-list-header">
         <h1 style={styles.pageTitle}>Inventory</h1>
-        <Link
-          to="/add"
-          style={styles.btnAdd}
-          onMouseOver={e => e.currentTarget.style.backgroundColor = '#163d63'}
-          onMouseOut={e => e.currentTarget.style.backgroundColor = '#1F4E79'}
-        >
-          + Add Product
-        </Link>
+        <Link to="/add" className="ss-btn ss-btn-primary">+ Add Product</Link>
       </div>
 
-      <div style={styles.controls}>
+      <div className="ss-controls">
         <input
           type="search"
           placeholder="Search by name or category…"
           value={search}
           onChange={e => setSearch(e.target.value)}
-          style={styles.searchInput}
+          className="ss-input"
+          style={{ flex: '1', minWidth: '180px' }}
         />
         <select
           value={categoryFilter}
           onChange={e => setCategoryFilter(e.target.value)}
-          style={styles.select}
+          className="ss-select"
         >
           <option value="All">All Categories</option>
           {CATEGORIES.map(cat => (
@@ -237,7 +138,7 @@ export default function InventoryList() {
         <select
           value={sort}
           onChange={e => setSort(e.target.value)}
-          style={styles.select}
+          className="ss-select"
         >
           {SORT_OPTIONS.map(opt => (
             <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -249,7 +150,7 @@ export default function InventoryList() {
         Showing <strong>{filtered.length}</strong> of <strong>{products.length}</strong> products
       </div>
 
-      <div style={styles.tableWrapper}>
+      <div className="ss-table-wrapper">
         <table style={styles.table}>
           <thead>
             <tr>
@@ -263,9 +164,7 @@ export default function InventoryList() {
           <tbody>
             {filtered.length === 0 ? (
               <tr>
-                <td colSpan={5} style={styles.empty}>
-                  No products match your filters.
-                </td>
+                <td colSpan={5} style={styles.empty}>No products match your filters.</td>
               </tr>
             ) : (
               filtered.map(product => {
@@ -274,7 +173,7 @@ export default function InventoryList() {
                 return (
                   <tr
                     key={product.id}
-                    style={{ backgroundColor: isHovered ? '#f8fafc' : '#ffffff', cursor: 'pointer' }}
+                    style={{ backgroundColor: isHovered ? '#f0f6ff' : '#ffffff', cursor: 'pointer' }}
                     onMouseEnter={() => setHoveredRow(product.id)}
                     onMouseLeave={() => setHoveredRow(null)}
                     onClick={() => navigate(`/product/${product.id}`)}

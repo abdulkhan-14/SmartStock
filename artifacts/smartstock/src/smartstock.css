@@ -1,0 +1,342 @@
+/* ── SmartStock Global Styles ─────────────────────────────────── */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #F7F9FB;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  font-size: 15px;
+  color: #111827;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { text-decoration: none; }
+
+/* ── Main content area ────────────────────────────────────────── */
+.ss-main {
+  min-height: calc(100vh - 60px);
+  background-color: #F7F9FB;
+}
+
+/* ── Page wrapper ─────────────────────────────────────────────── */
+.ss-page {
+  padding: 28px 32px;
+}
+
+@media (max-width: 600px) {
+  .ss-page {
+    padding: 16px;
+  }
+}
+
+/* ── Navbar responsive ────────────────────────────────────────── */
+.ss-navbar {
+  background-color: #1F4E79;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 60px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.ss-navbar-brand {
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: 0.4px;
+  white-space: nowrap;
+}
+
+.ss-navbar-links {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.ss-nav-link {
+  color: #cce0f5;
+  text-decoration: none;
+  padding: 7px 15px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.18s, color 0.18s;
+  white-space: nowrap;
+}
+
+.ss-nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.ss-nav-link-active {
+  background-color: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+@media (max-width: 500px) {
+  .ss-navbar {
+    padding: 10px 14px;
+    flex-wrap: wrap;
+    gap: 8px;
+    min-height: auto;
+  }
+  .ss-navbar-brand {
+    font-size: 17px;
+  }
+  .ss-nav-link {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+}
+
+/* ── 2×2 Dashboard Grid ───────────────────────────────────────── */
+.ss-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .ss-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── 2-col form row ───────────────────────────────────────────── */
+.ss-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 600px) {
+  .ss-form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── 2-col details grid ───────────────────────────────────────── */
+.ss-details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 600px) {
+  .ss-details-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Summary grid ─────────────────────────────────────────────── */
+.ss-summary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+/* ── Loading indicator ────────────────────────────────────────── */
+.ss-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 260px;
+  gap: 12px;
+  color: #6b7280;
+  font-size: 15px;
+}
+
+.ss-loading-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid #e5e7eb;
+  border-top-color: #1F4E79;
+  border-radius: 50%;
+  animation: ss-spin 0.75s linear infinite;
+}
+
+@keyframes ss-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Inventory table responsive ───────────────────────────────── */
+.ss-table-wrapper {
+  overflow-x: auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* ── Inventory controls ───────────────────────────────────────── */
+.ss-controls {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* ── Button base resets ───────────────────────────────────────── */
+.ss-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.15s, box-shadow 0.15s;
+  white-space: nowrap;
+  padding: 9px 18px;
+}
+
+.ss-btn-primary {
+  background-color: #1F4E79;
+  color: #ffffff;
+}
+.ss-btn-primary:hover {
+  background-color: #163d63;
+}
+
+.ss-btn-secondary {
+  background-color: #f3f4f6;
+  color: #374151;
+  border: 1px solid #d1d5db;
+}
+.ss-btn-secondary:hover {
+  background-color: #e5e7eb;
+}
+
+.ss-btn-danger {
+  background-color: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fca5a5;
+}
+.ss-btn-danger:hover {
+  background-color: #fee2e2;
+}
+
+/* ── Card base ────────────────────────────────────────────────── */
+.ss-card {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* ── Input base ───────────────────────────────────────────────── */
+.ss-input, .ss-select {
+  padding: 9px 12px;
+  font-size: 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  outline: none;
+  background-color: #f9fafb;
+  color: #111827;
+  font-family: inherit;
+  transition: border-color 0.15s, background-color 0.15s;
+}
+
+.ss-input:focus, .ss-select:focus {
+  border-color: #1F4E79;
+  background-color: #ffffff;
+}
+
+/* ── Typography helpers ───────────────────────────────────────── */
+.ss-page-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1F4E79;
+  margin: 0 0 20px;
+}
+
+.ss-section-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #374151;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+/* ── Alerts page responsive ───────────────────────────────────── */
+.ss-alert-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  gap: 12px;
+}
+
+@media (max-width: 600px) {
+  .ss-alert-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .ss-alert-card .ss-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ── Inventory list responsive header ─────────────────────────── */
+.ss-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ── Form actions responsive ──────────────────────────────────── */
+.ss-form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.ss-form-actions-left {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 500px) {
+  .ss-form-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .ss-form-actions-left {
+    flex-direction: column;
+  }
+  .ss-form-actions .ss-btn,
+  .ss-form-actions-left .ss-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

@@ -20,16 +20,13 @@ function getStatus(product) {
 
 function formatDate(iso) {
   if (!iso) return '—';
-  return new Date(iso).toLocaleDateString('en-US', {
-    month: 'short', day: '2-digit', year: 'numeric',
-  });
+  return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
 }
 
 function formatDateTime(iso) {
   if (!iso) return '—';
   return new Date(iso).toLocaleDateString('en-US', {
-    month: 'short', day: '2-digit', year: 'numeric',
-    hour: '2-digit', minute: '2-digit',
+    month: 'short', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit',
   });
 }
 
@@ -67,21 +64,15 @@ function generateHistory(product) {
       runningQty = Math.max(product.quantity, runningQty - drop);
     }
     const notes = ['Restocked', 'Sold units', 'Inventory count', 'Sold units', 'Current stock'];
-    entries.push({
-      date: date.toISOString().split('T')[0],
-      quantity: runningQty,
-      note: notes[4 - i],
-    });
+    entries.push({ date: date.toISOString().split('T')[0], quantity: runningQty, note: notes[4 - i] });
   }
   return entries;
 }
 
 const s = {
-  page: { padding: '28px 32px', maxWidth: '780px', margin: '0 auto' },
   backLink: {
     display: 'inline-flex', alignItems: 'center', gap: '6px',
-    color: '#1F4E79', fontSize: '14px', fontWeight: '500',
-    textDecoration: 'none', marginBottom: '20px',
+    color: '#1F4E79', fontSize: '14px', fontWeight: '500', marginBottom: '20px',
   },
   header: {
     display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between',
@@ -95,25 +86,14 @@ const s = {
     fontSize: '13px', fontWeight: '500',
     backgroundColor: '#eff6ff', color: '#1d4ed8', border: '1px solid #bfdbfe',
   },
-  editBtn: {
-    padding: '9px 18px', backgroundColor: '#1F4E79', color: '#fff',
-    border: 'none', borderRadius: '6px', fontSize: '14px', fontWeight: '600',
-    cursor: 'pointer', textDecoration: 'none', display: 'inline-block',
-    flexShrink: 0,
-  },
   card: {
     backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: '10px',
-    padding: '24px', marginBottom: '20px',
-    boxShadow: '0 1px 6px rgba(0,0,0,0.05)',
+    padding: '24px', marginBottom: '20px', boxShadow: '0 1px 6px rgba(0,0,0,0.05)',
   },
   cardTitle: {
     fontSize: '14px', fontWeight: '700', color: '#374151',
     textTransform: 'uppercase', letterSpacing: '0.05em',
-    marginBottom: '16px', paddingBottom: '10px',
-    borderBottom: '1px solid #f1f5f9',
-  },
-  detailsGrid: {
-    display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px',
+    marginBottom: '16px', paddingBottom: '10px', borderBottom: '1px solid #f1f5f9',
   },
   detailItem: { display: 'flex', flexDirection: 'column', gap: '3px' },
   detailLabel: { fontSize: '12px', fontWeight: '600', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.04em' },
@@ -123,48 +103,34 @@ const s = {
   qtyInput: {
     width: '120px', padding: '9px 12px', fontSize: '15px',
     border: '1px solid #d1d5db', borderRadius: '6px',
-    outline: 'none', color: '#111827', backgroundColor: '#f9fafb',
-    boxSizing: 'border-box',
-  },
-  saveBtn: {
-    padding: '9px 20px', backgroundColor: '#1F4E79', color: '#fff',
-    border: 'none', borderRadius: '6px', fontSize: '14px', fontWeight: '600',
-    cursor: 'pointer',
+    outline: 'none', color: '#111827', backgroundColor: '#f9fafb', boxSizing: 'border-box',
   },
   successMsg: {
     padding: '8px 14px', backgroundColor: '#f0fdf4', color: '#16a34a',
-    border: '1px solid #86efac', borderRadius: '6px',
-    fontSize: '13px', fontWeight: '500',
+    border: '1px solid #86efac', borderRadius: '6px', fontSize: '13px', fontWeight: '500',
   },
   historyTable: { width: '100%', borderCollapse: 'collapse', fontSize: '14px' },
   historyTh: {
-    textAlign: 'left', padding: '8px 12px',
-    backgroundColor: '#f8fafc', color: '#374151',
+    textAlign: 'left', padding: '8px 12px', backgroundColor: '#f8fafc', color: '#374151',
     fontSize: '12px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.04em',
     borderBottom: '1px solid #e5e7eb',
   },
-  historyTd: {
-    padding: '10px 12px', color: '#374151',
-    borderBottom: '1px solid #f1f5f9', verticalAlign: 'middle',
-  },
+  historyTd: { padding: '10px 12px', color: '#374151', borderBottom: '1px solid #f1f5f9', verticalAlign: 'middle' },
   historyNote: { fontSize: '12px', color: '#9ca3af', fontStyle: 'italic' },
-  qtyDot: {
-    display: 'inline-block', width: '8px', height: '8px',
-    borderRadius: '50%', marginRight: '6px',
-  },
+  qtyDot: { display: 'inline-block', width: '8px', height: '8px', borderRadius: '50%', marginRight: '6px' },
   aiNote: {
     backgroundColor: '#fefce8', border: '1px solid #fde68a', borderRadius: '8px',
     padding: '16px 18px', marginBottom: '20px',
     display: 'flex', gap: '12px', alignItems: 'flex-start',
   },
   aiNoteText: { fontSize: '14px', color: '#92400e', lineHeight: '1.6', margin: 0 },
-  notFound: { padding: '32px', color: '#6b7280', fontSize: '15px' },
+  notFound: { color: '#6b7280', fontSize: '15px' },
 };
 
 export default function ProductDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { products, updateProduct } = useAppContext();
+  const { products, isLoading, updateProduct } = useAppContext();
 
   const product = products.find(p => p.id === id);
   const status = product ? getStatus(product) : null;
@@ -187,9 +153,18 @@ export default function ProductDetail() {
     setTimeout(() => setShowSuccess(false), 2000);
   }
 
+  if (isLoading) {
+    return (
+      <div className="ss-loading">
+        <div className="ss-loading-spinner" />
+        Loading product…
+      </div>
+    );
+  }
+
   if (!product) {
     return (
-      <div style={s.page}>
+      <div className="ss-page" style={{ maxWidth: '780px', margin: '0 auto' }}>
         <Link to="/inventory" style={s.backLink}>← Back to Inventory</Link>
         <div style={s.notFound}>Product not found.</div>
       </div>
@@ -199,7 +174,7 @@ export default function ProductDetail() {
   const maxHistoryQty = Math.max(...history.map(h => h.quantity));
 
   return (
-    <div style={s.page}>
+    <div className="ss-page" style={{ maxWidth: '780px', margin: '0 auto' }}>
       <Link to="/inventory" style={s.backLink}>← Back to Inventory</Link>
 
       {/* Header */}
@@ -211,12 +186,7 @@ export default function ProductDetail() {
             <span style={s.categoryChip}>{product.category}</span>
           </div>
         </div>
-        <Link
-          to={`/edit/${product.id}`}
-          style={s.editBtn}
-          onMouseOver={e => e.currentTarget.style.backgroundColor = '#163d63'}
-          onMouseOut={e => e.currentTarget.style.backgroundColor = '#1F4E79'}
-        >
+        <Link to={`/edit/${product.id}`} className="ss-btn ss-btn-primary">
           Edit Product
         </Link>
       </div>
@@ -235,7 +205,7 @@ export default function ProductDetail() {
       {/* Details card */}
       <div style={s.card}>
         <div style={s.cardTitle}>Product Details</div>
-        <div style={s.detailsGrid}>
+        <div className="ss-details-grid">
           <div style={s.detailItem}>
             <span style={s.detailLabel}>Current Quantity</span>
             <span style={s.detailValue}>{product.quantity} units</span>
@@ -247,9 +217,7 @@ export default function ProductDetail() {
           <div style={s.detailItem}>
             <span style={s.detailLabel}>Expiry Date</span>
             <span style={s.detailValue}>{formatDate(product.expiryDate)}</span>
-            <span style={s.detailValueSub}>
-              {getDaysUntilExpiry(product.expiryDate)} days remaining
-            </span>
+            <span style={s.detailValueSub}>{getDaysUntilExpiry(product.expiryDate)} days remaining</span>
           </div>
           <div style={s.detailItem}>
             <span style={s.detailLabel}>Supplier</span>
@@ -269,23 +237,12 @@ export default function ProductDetail() {
         <div style={s.cardTitle}>Quick Update Quantity</div>
         <form onSubmit={handleQtySave} style={s.qtyForm}>
           <input
-            type="number"
-            min="0"
-            value={newQty}
+            type="number" min="0" value={newQty}
             onChange={e => setNewQty(e.target.value)}
             style={s.qtyInput}
           />
-          <button
-            type="submit"
-            style={s.saveBtn}
-            onMouseOver={e => e.currentTarget.style.backgroundColor = '#163d63'}
-            onMouseOut={e => e.currentTarget.style.backgroundColor = '#1F4E79'}
-          >
-            Save
-          </button>
-          {showSuccess && (
-            <span style={s.successMsg}>Quantity updated successfully!</span>
-          )}
+          <button type="submit" className="ss-btn ss-btn-primary">Save</button>
+          {showSuccess && <span style={s.successMsg}>Quantity updated!</span>}
         </form>
       </div>
 
@@ -314,15 +271,12 @@ export default function ProductDetail() {
                     <span style={{ ...s.qtyDot, backgroundColor: barColor }} />
                     {entry.quantity}
                   </td>
-                  <td style={s.historyTd}>
-                    <span style={s.historyNote}>{entry.note}</span>
-                  </td>
+                  <td style={s.historyTd}><span style={s.historyNote}>{entry.note}</span></td>
                   <td style={{ ...s.historyTd, minWidth: '120px' }}>
                     <div style={{ backgroundColor: '#f1f5f9', borderRadius: '4px', height: '8px', overflow: 'hidden' }}>
                       <div style={{
-                        width: `${pct}%`, height: '100%',
-                        backgroundColor: barColor, borderRadius: '4px',
-                        transition: 'width 0.3s',
+                        width: `${pct}%`, height: '100%', backgroundColor: barColor,
+                        borderRadius: '4px', transition: 'width 0.3s',
                       }} />
                     </div>
                   </td>

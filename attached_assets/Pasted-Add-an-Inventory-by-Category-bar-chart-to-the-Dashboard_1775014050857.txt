@@ -1,0 +1,72 @@
+Add an "Inventory by Category" bar chart to the Dashboard screen.
+
+SETUP:
+Install recharts: npm install recharts
+Then import it in Dashboard.jsx:
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+
+CHART DATA:
+Calculate the chart data dynamically from AppContext products:
+- Group products by category
+- For each category, calculate total value = sum of (quantity * price) for all products in that category
+- If products don't have a price field, use quantity as the Y-axis value instead (label it "Total Units" not "Total Value")
+- Sort categories by value descending
+
+CHART COMPONENT:
+const chartData = categories.map(cat => ({
+  name: cat,
+  value: totalValueOrQuantityForCategory
+}))
+
+Render a ResponsiveContainer with width="100%" height={300}:
+<ResponsiveContainer width="100%" height={300}>
+  <BarChart data={chartData} margin={{ top: 10, right: 20, left: 10, bottom: 20 }}>
+    <CartesianGrid strokeDasharray="3 3" stroke="#1E2D45" vertical={false} />
+    <XAxis 
+      dataKey="name" 
+      tick={{ fill: '#64748B', fontSize: 11 }} 
+      axisLine={{ stroke: '#1E2D45' }}
+      tickLine={false}
+      angle={-30}
+      textAnchor="end"
+      height={50}
+    />
+    <YAxis 
+      tick={{ fill: '#64748B', fontSize: 11 }} 
+      axisLine={false}
+      tickLine={false}
+      tickFormatter={(v) => v > 999 ? `$${(v/1000).toFixed(1)}k` : `${v}`}
+    />
+    <Tooltip 
+      contentStyle={{ 
+        backgroundColor: '#111827', 
+        border: '1px solid #1E2D45', 
+        borderRadius: '8px',
+        color: '#E2E8F0'
+      }}
+      cursor={{ fill: '#00D4FF10' }}
+    />
+    <Bar dataKey="value" radius={[6, 6, 0, 0]}>
+      {chartData.map((entry, index) => (
+        <Cell 
+          key={index} 
+          fill={index % 3 === 0 ? '#00D4FF' : index % 3 === 1 ? '#7C3AED' : '#0EA5E9'} 
+        />
+      ))}
+    </Bar>
+  </BarChart>
+</ResponsiveContainer>
+
+CARD WRAPPER:
+Wrap the chart in a dashboard card with:
+- Title: "Inventory by Category" bold, color #F1F5F9
+- Subtitle: "Stock distribution across product categories." color #64748B, font-size 13px
+- Background: #111827, border: 1px solid #1E2D45, border-radius: 12px, padding: 20px
+- Left border accent: 3px solid #7C3AED
+
+PLACEMENT:
+Place this chart card in a 2-column grid row on the Dashboard, 
+alongside the Low Stock Items panel (chart on the right, low stock on the left).
+On mobile (under 768px) stack them vertically.
+
+Do not change any other screens or logic.

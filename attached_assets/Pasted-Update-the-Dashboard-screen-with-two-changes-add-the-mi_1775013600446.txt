@@ -1,0 +1,81 @@
+Update the Dashboard screen with two changes: add the missing panels and apply dark mode styling.
+
+── MISSING PANELS TO ADD ──────────────────────────────────
+
+Add these three sections to the Dashboard, alongside the existing Low Stock panel:
+
+Panel 1 — Expiring Soon (already have Low Stock, add this next to it):
+- Show all products where expiryDate is within the next 7 days
+- Display: product name, expiry date formatted as "MMM DD, YYYY", and urgency label
+- Urgency label: "Expires in X days" — red text if 1–2 days, amber if 3–7 days
+- If none: show "No items expiring soon — you're all good!" in green
+- Card left border accent: 3px solid #F59E0B (amber)
+- Link each item to /product/:id on click
+
+Panel 2 — Fast-Moving Products:
+- Show the 5 products with the most recent lastUpdated dates
+- Display: product name, category, and "Last updated: X days ago"
+- Label each with a cyan "Active" chip
+- If no recent updates: show "No recent activity"
+- Card left border accent: 3px solid #00D4FF (cyan)
+- Link each item to /product/:id on click
+
+AI Insight Banner (place this at the top of the dashboard, below the greeting):
+- Background: linear-gradient(135deg, #00D4FF10, #7C3AED10)
+- Border: 1px solid #00D4FF30, border-radius 12px, padding 16px 20px
+- Title: "🤖 SmartStock AI" in #00D4FF, bold
+- Body text: "You have X low-stock items and Y items expiring soon. Consider placing
+  orders for: [comma-separated names of low-stock products]."
+- Calculate X, Y, and the product list dynamically from AppContext
+
+── DARK MODE STYLING ──────────────────────────────────────
+
+Apply this dark mode theme across the entire Dashboard (and globally if not already done):
+
+Colours:
+- Page/body background: #0A0E1A
+- All card backgrounds: #111827
+- Card borders: 1px solid #1E2D45
+- Primary accent: #00D4FF (cyan)
+- Body text: #E2E8F0
+- Muted/secondary text: #64748B
+- Stat card backgrounds: #111827 with border 1px solid #1E2D45
+
+Navbar:
+- Background: #070B14, bottom border: 1px solid #00D4FF20
+- "SmartStock" logo: color #00D4FF, text-shadow: 0 0 12px #00D4FF80
+- Nav links: color #94A3B8, active link color #00D4FF
+
+Stat cards (Total Products, Total Value, Low Stock Alerts, Categories):
+- Background: #111827, border: 1px solid #1E2D45, border-radius: 12px
+- Stat number: color #F1F5F9, font-weight 700
+- Icons: color #00D4FF
+- Low Stock Alerts number: keep in #EF4444
+
+Charts (bar chart):
+- Chart background: #111827
+- Bar colour: #00D4FF
+- Axis labels and grid lines: #334155
+
+Inputs, dropdowns:
+- Background #1E293B, border 1px solid #334155, color #E2E8F0
+- Focus: border-color #00D4FF, box-shadow 0 0 0 3px #00D4FF20
+
+Status badges:
+- Low Stock: background #EF444415, color #EF4444, border 1px solid #EF444440
+- Expiring Soon: background #F59E0B15, color #F59E0B, border 1px solid #F59E0B40
+- Normal / Active: background #10B98115, color #10B981, border 1px solid #10B98140
+- Border-radius: 20px, padding: 3px 10px, font-size: 12px, font-weight: 600
+
+Buttons:
+- Primary: background linear-gradient(135deg, #00D4FF, #0EA5E9), color #000, font-weight 700
+- Hover: box-shadow 0 0 16px #00D4FF40
+- Secondary: transparent, border 1px solid #334155, color #94A3B8
+
+Typography:
+- Add Inter font: <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"> in index.html
+- Font-family: 'Inter', system-ui, sans-serif on body
+- Page title: font-weight 700, color #F1F5F9
+- Section labels: uppercase, letter-spacing 0.08em, font-size 11px, color #00D4FF
+
+Do not change any routing, logic, or data. Only update the UI.
